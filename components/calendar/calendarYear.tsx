@@ -8,7 +8,13 @@ const CalendarYear: React.FC<{ date: Date }> = ({ date }) => {
   const months = React.useMemo(() => getAllMonthsInYear(date), [date]);
 
   return (
-    <Grid gridTemplateColumns="3">
+    <Grid
+      gridTemplateColumns={{
+        "@initial": "1",
+        "@bp2": "2",
+        "@bp3": "3",
+      }}
+    >
       {months.map((month, index) => (
         <CalendarMonth key={`calendar-year-calendar-month-${id}-${index}`} date={month} />
       ))}
