@@ -13,7 +13,7 @@ export const getFormattedDay = (date: Date, locale?: string): string => format(d
 
 export const getFormattedMonth = (date: Date, locale?: string): string => format(date, "MMMM", { locale: getLocale(locale) });
 
-export const getFormattedDayAndMonth = (date: Date, locale?: string): string => format(date, "dd-MM", { locale: getLocale(locale) });
+export const getFormattedDayAndMonth = (date: Date, locale?: string): string => format(date, "dd.MM", { locale: getLocale(locale) });
 
 export const getFormattedMicrosoftSqlDate = (date: Date, locale?: string): string => format(date, "yyyy-MM-dd hh-mm-ss", { locale: getLocale(locale) });
 

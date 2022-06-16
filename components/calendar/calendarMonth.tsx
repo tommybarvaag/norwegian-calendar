@@ -3,9 +3,23 @@ import { getCalendarYear } from "@/utils/calendarUtils";
 import { getWeek } from "@/utils/dateUtils";
 import { getMonth, getYear, startOfISOWeek } from "date-fns";
 import * as React from "react";
-import { Box, Card, Flex, Grid, Heading } from "../ui";
-import { CalendarDay } from "./calendarDay";
+import { Box, Card, Flex, Grid, Heading, Text } from "../ui";
+import { CalendarEntry } from "./calendarDay";
 import { CalendarDayHeading } from "./calendarDayHeading";
+
+const getSpacingDaysToRender = (days: CalendarDayType[]) => {
+  const spacingDaysToRender: Record<string, number> = {
+    MONDAY: 0,
+    TUESDAY: 1,
+    WEDNESDAY: 2,
+    THURSDAY: 3,
+    FRIDAY: 4,
+    SATURDAY: 5,
+    SUNDAY: 6,
+  };
+
+  return spacingDaysToRender[days?.[0]?.name?.toUpperCase()] ?? 0;
+};
 
 const CalendarMonth: React.FC<{ date: Date }> = ({ date, ...other }) => {
   const { year, month } = React.useMemo(
@@ -25,23 +39,8 @@ const CalendarMonth: React.FC<{ date: Date }> = ({ date, ...other }) => {
     };
   }, [year, month]);
 
-  const renderSpacingDays = (days: CalendarDayType[]): JSX.Element[] | null => {
-    if (days === null || days === undefined || days?.length <= 0) {
-      return null;
-    }
-
-    const spacingDaysToRender: Record<string, number> = {
-      MONDAY: 0,
-      TUESDAY: 1,
-      WEDNESDAY: 2,
-      THURSDAY: 3,
-      FRIDAY: 4,
-      SATURDAY: 5,
-      SUNDAY: 6,
-    };
-
-    return [...Array(spacingDaysToRender[days[0].name?.toUpperCase()] ?? 0)].map((key, index) => <div key={`calendar-day-spacing-${index}`} />);
-  };
+  const renderSpacingDays = (days: CalendarDayType[]) =>
+    [...Array(getSpacingDaysToRender(days))].map((key, index) => <CalendarEntry key={`calendar-day-spacing-${index}`} />);
 
   return (
     <Box
@@ -60,13 +59,7 @@ const CalendarMonth: React.FC<{ date: Date }> = ({ date, ...other }) => {
         css={{
           position: "relative",
           display: "grid",
-          padding: "$1",
-          minHeight: "315px",
-          my: "$3",
-          mx: "auto",
-          "@bp1": {
-            padding: "$2",
-          },
+          padding: "0",
         }}
       >
         <CalendarDayHeading>week</CalendarDayHeading>
@@ -77,15 +70,34 @@ const CalendarMonth: React.FC<{ date: Date }> = ({ date, ...other }) => {
         <CalendarDayHeading>fri.</CalendarDayHeading>
         <CalendarDayHeading>sat.</CalendarDayHeading>
         <CalendarDayHeading>sun.</CalendarDayHeading>
-        <Flex justifyContent="center">{getWeek(selectedMonth?.days[0].date, "nb")}</Flex>
+        <CalendarEntry isWeekNumber>{getWeek(selectedMonth?.days[0].date, "nb")}</CalendarEntry>
         {renderSpacingDays(selectedMonth?.days)}
         {selectedMonth?.days?.map((day, i) => (
           <>
-            {startOfISOWeek(day.date).getTime() === day.date.getTime() ? <Flex justifyContent="center">{getWeek(day.date, "nb")}</Flex> : null}
-            <CalendarDay key={`calendar-day-${i}`} day={day} isWorkDay={day.isWorkDay} />
+            {startOfISOWeek(day.date).getTime() === day.date.getTime() ? (
+              <CalendarEntry key={`calendar-week-${i}`} isWeekNumber>
+                {getWeek(day.date, "nb")}
+              </CalendarEntry>
+            ) : null}
+            <CalendarEntry key={`calendar-day-${i}`} isWorkDay={day.isWorkDay} isSunday={day.isSunday} isHoliday={day.isHoliday}>
+              {day.day}
+            </CalendarEntry>
           </>
         ))}
       </Grid>
+      <Flex
+        css={{
+          maxWidth: "95%",
+          margin: "$3 auto 0",
+        }}
+      >
+        <Text size="tiny">
+          {selectedMonth?.days
+            ?.filter((day) => day.isHoliday)
+            .map((day) => `${day.holidayInformation.shortDate}: ${day.holidayInformation.name}`)
+            .join(", ")}
+        </Text>
+      </Flex>
     </Box>
   );
 };

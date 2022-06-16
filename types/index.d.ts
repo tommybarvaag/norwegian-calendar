@@ -1,3 +1,8 @@
+export type CalendarHolidayInformation = {
+  name: string;
+  shortDate: string;
+};
+
 export type CalendarYear = {
   year: number;
   isLeapYear: boolean;
@@ -18,8 +23,10 @@ export type CalendarDay = {
   formattedDate: string;
   formattedShortDate: string;
   formattedLongDate: string;
+  holidayInformation?: CalendarHolidayInformation;
   isHoliday: boolean;
   isWorkDay?: boolean;
+  isSunday?: boolean;
 };
 
 export type Holiday = {

@@ -1,6 +1,14 @@
 import { CalendarDay, CalendarMonth, Holiday } from "@/types";
 import { isString, memoize } from "@/utils/commonUtils";
-import { getFormattedDate, getFormattedDay, getFormattedDayAndMonth, getFormattedLongDate, getFormattedMonth, getFormattedShortDate } from "@/utils/dateUtils";
+import {
+  getFormattedDate,
+  getFormattedDay,
+  getFormattedDayAndMonth,
+  getFormattedLongDate,
+  getFormattedMonth,
+  getFormattedShortDate,
+  getWeek,
+} from "@/utils/dateUtils";
 import {
   addDays,
   eachDayOfInterval,
@@ -10,7 +18,7 @@ import {
   endOfMonth,
   endOfYear,
   getDate,
-  getWeek,
+  getDay,
   getYear,
   isLeapYear,
   startOfISOWeek,
@@ -183,12 +191,13 @@ export const createDate = (date: Date, locale?: string): CalendarDay => {
     date,
     day: getDate(date),
     name: getFormattedDay(date, locale),
-    weekNumber: getWeek(date),
+    weekNumber: getWeek(date, locale),
     formattedDate: getFormattedDate(date, locale),
     formattedShortDate: getFormattedShortDate(date, locale),
     formattedLongDate: getFormattedLongDate(date, locale),
     isHoliday,
     holidayInformation,
+    isSunday: getDay(date) === 0 && !isHoliday,
   };
 
   return {
@@ -197,7 +206,7 @@ export const createDate = (date: Date, locale?: string): CalendarDay => {
   };
 };
 
-export const getCalendarYear = (year: number) => {
+export const getCalendarYear = (year: number, locale?: string) => {
   const date = getFirstDayOfYear(year);
   const allMonthsInYear = getAllMonthsInYear(date);
 
@@ -208,7 +217,7 @@ export const getCalendarYear = (year: number) => {
       const month = getFormattedMonth(monthDate);
       return {
         month,
-        days: getAllDaysInMonth(monthDate).map((date) => createDate(date)),
+        days: getAllDaysInMonth(monthDate).map((date) => createDate(date, locale)),
       };
     }),
   };
