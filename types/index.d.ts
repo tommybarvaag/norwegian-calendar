@@ -1,3 +1,14 @@
+import type { NextPage } from "next";
+
+export type NorwegianCalendarNextPage<P = {}> = NextPage<P> & { layoutProps: PageLayoutProps };
+
+export type PageLayoutProps = {
+  Layout: React.ComponentType<any>;
+  meta: {
+    title: string;
+  };
+};
+
 export type CalendarHolidayInformation = {
   name: string;
   shortDate: string;

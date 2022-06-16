@@ -1,14 +1,18 @@
-import type { NextPage } from "next";
-import { CalendarYear, Main } from "../components";
+import { MainLayout } from "@/components/layout";
+import type { NorwegianCalendarNextPage } from "@/types";
+import { CalendarYear } from "../components";
 
-const Home: NextPage = () => {
+const Home: NorwegianCalendarNextPage = () => {
   const date = new Date();
 
-  return (
-    <Main>
-      <CalendarYear date={date} />
-    </Main>
-  );
+  return <CalendarYear date={date} />;
+};
+
+Home.layoutProps = {
+  Layout: MainLayout,
+  meta: {
+    title: "Home",
+  },
 };
 
 export default Home;

@@ -1,5 +1,5 @@
 import { CalendarDay, CalendarMonth, Holiday } from "@/types";
-import { isString, memoize } from "@/utils/commonUtils";
+import { isString, memoize, range } from "@/utils/commonUtils";
 import {
   getFormattedDate,
   getFormattedDay,
@@ -221,4 +221,9 @@ export const getCalendarYear = (year: number, locale?: string) => {
       };
     }),
   };
+};
+
+export const getStaticYearRange = () => {
+  const date = new Date();
+  return range(date.getFullYear() - 10, date.getFullYear() + 50);
 };

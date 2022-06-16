@@ -1,4 +1,4 @@
-import type { AppProps } from "next/app";
+import * as React from "react";
 import { globalCss } from "stitches.config";
 
 const globalStyles = globalCss({
@@ -26,9 +26,24 @@ const globalStyles = globalCss({
   },
 });
 
-function MyApp({ Component, pageProps }: AppProps) {
+type MyAppProps = {
+  Component: React.ComponentType & {
+    layoutProps?: any;
+  };
+  pageProps?: Record<string, any>;
+};
+
+function MyApp({ Component, pageProps }: MyAppProps) {
   globalStyles();
-  return <Component {...pageProps} />;
+  const Layout = Component.layoutProps?.Layout || React.Fragment;
+
+  const layoutProps = Component.layoutProps?.Layout ? { pageProps, layoutProps: Component.layoutProps } : {};
+
+  return (
+    <Layout {...layoutProps}>
+      <Component {...pageProps} />
+    </Layout>
+  );
 }
 
 export default MyApp;
