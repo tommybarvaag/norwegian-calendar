@@ -1,7 +1,7 @@
 import type { CalendarDay as CalendarDayType } from "@/types";
 import { getCalendarYear } from "@/utils/calendarUtils";
 import { getDayName, getWeek } from "@/utils/dateUtils";
-import { getMonth, getYear, startOfISOWeek } from "date-fns";
+import { getDay, getMonth, getYear, startOfISOWeek } from "date-fns";
 import * as React from "react";
 import { Box, Card, Flex, Grid, Heading, Text } from "../ui";
 import { CalendarEntry } from "./calendarDay";
@@ -27,6 +27,7 @@ const getDayOfCurrentWeek = (day: "monday" | "tuesday" | "wednesday" | "thursday
 
 const getSpacingDaysToRender = (days: CalendarDayType[]) => {
   const spacingDaysToRender: Record<string, number> = {
+    0: 6,
     1: 0,
     2: 1,
     3: 2,
@@ -35,6 +36,8 @@ const getSpacingDaysToRender = (days: CalendarDayType[]) => {
     6: 5,
     7: 6,
   };
+
+  console.log(days?.[0]?.date?.getDay());
 
   return spacingDaysToRender[days?.[0]?.date?.getDay()] ?? 0;
 };
@@ -59,6 +62,13 @@ const CalendarMonth: React.FC<{ date: Date }> = ({ date, ...other }) => {
 
   const renderSpacingDays = (days: CalendarDayType[], number?: number) =>
     [...Array(number ?? getSpacingDaysToRender(days))].map((key, index) => <CalendarEntry key={`calendar-day-spacing-${index}`}>&nbsp;</CalendarEntry>);
+
+  const renderClosingSpacingDays = (days: CalendarDayType[], number?: number) => {
+    // get last item
+    const lastItem = days[days.length - 1];
+    const daysToRender = 7 - getDay(lastItem.date);
+    return [...Array(daysToRender > 0 ? daysToRender : 0)].map((key, index) => <CalendarEntry key={`calendar-day-spacing-${index}`}>&nbsp;</CalendarEntry>);
+  };
 
   return (
     <Box
@@ -136,7 +146,7 @@ const CalendarMonth: React.FC<{ date: Date }> = ({ date, ...other }) => {
             </>
           );
         })}
-        {renderSpacingDays(null, 50 - (8 + (getSpacingDaysToRender(selectedMonth?.days) ?? 0) + (selectedMonth?.days?.length ?? 0)))}
+        {renderClosingSpacingDays(selectedMonth?.days)}
       </Grid>
       <Flex
         css={{
