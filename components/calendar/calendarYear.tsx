@@ -9,7 +9,15 @@ const CalendarYear: React.FC<{ date: Date }> = ({ date }) => {
   const months = React.useMemo(() => getAllMonthsInYear(date), [date]);
 
   return (
-    <Flex flexDirection="column" alignItems="center">
+    <Flex
+      flexDirection="column"
+      alignItems="center"
+      css={{
+        padding: "0 $3",
+        maxWidth: "$lgContainer",
+        margin: "0 auto",
+      }}
+    >
       <Heading size="5">{getYear(date)}</Heading>
       <Grid
         gridTemplateColumns={{
