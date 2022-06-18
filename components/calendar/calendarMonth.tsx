@@ -78,37 +78,37 @@ const CalendarMonth: React.FC<{ date: Date }> = ({ date, ...other }) => {
           display: "grid",
           padding: "0",
           "> div:nth-child(16n+9)": {
-            backgroundColor: "$gray12",
+            backgroundColor: "$gray4",
           },
           "> div:nth-child(16n+10)": {
-            backgroundColor: "$gray12",
+            backgroundColor: "$gray4",
           },
           "> div:nth-child(16n+11)": {
-            backgroundColor: "$gray12",
+            backgroundColor: "$gray4",
           },
           "> div:nth-child(16n+12)": {
-            backgroundColor: "$gray12",
+            backgroundColor: "$gray4",
           },
           "> div:nth-child(16n+13)": {
-            backgroundColor: "$gray12",
+            backgroundColor: "$gray4",
           },
           "> div:nth-child(16n+14)": {
-            backgroundColor: "$gray12",
+            backgroundColor: "$gray4",
           },
           "> div:nth-child(16n+15)": {
-            backgroundColor: "$gray12",
+            backgroundColor: "$gray4",
           },
           "> div:nth-child(16n+16)": {
-            backgroundColor: "$gray12",
+            backgroundColor: "$gray4",
           },
           "> div:nth-child(16n+88)": {
-            backgroundColor: "$gray12",
+            backgroundColor: "$gray4",
           },
         }}
       >
         <CalendarDayHeading
           css={{
-            color: "$gray11",
+            color: "$textDark",
           }}
         >
           uke
@@ -125,7 +125,7 @@ const CalendarMonth: React.FC<{ date: Date }> = ({ date, ...other }) => {
         {selectedMonth?.days?.map((day, i) => {
           return (
             <>
-              {startOfISOWeek(day.date).getTime() === day.date.getTime() ? (
+              {i !== 0 && startOfISOWeek(day.date).getTime() === day.date.getTime() ? (
                 <CalendarEntry key={`calendar-week-${i}`} isWeekNumber>
                   {getWeek(day.date, "nb")}
                 </CalendarEntry>

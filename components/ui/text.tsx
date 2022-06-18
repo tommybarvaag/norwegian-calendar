@@ -13,34 +13,10 @@ const Text = styled("span", {
       text: {
         color: "$text",
       },
-      textDark: {
+      "text-dark": {
         color: "$textDark",
-      },
-      black: {
-        color: "$black",
-      },
-      gray: {
-        color: "$gray",
-      },
-      grayLight: {
-        color: "$grayLight",
-      },
-      grayLighter: {
-        color: "$grayLighter",
-      },
-      grayLightest: {
-        color: "$grayLightest",
-      },
-      green: {
-        color: "$green",
-      },
-      red: {
-        color: "$red",
-      },
-      white: {
-        color: "$white",
-      },
     },
+  },
     size: {
       tiny: {
         fontSize: "$tiny",

@@ -10,7 +10,7 @@ const globalStyles = globalCss({
   },
   html: {},
   body: {
-    backgroundColor: "$main",
+    backgroundColor: "$background",
     color: "$text",
     fontFamily: "$default",
     minWidth: "360px",

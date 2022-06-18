@@ -7,11 +7,14 @@ const CalendarDayHeading: React.FC<{ children: React.ReactNode; css?: CSS }> = (
     <Flex
       justifyContent="center"
       alignItems="center"
-      css={mergeCss({
-        py: "$2",
-      }, css)}
+      css={mergeCss(
+        {
+          py: "$2",
+        },
+        css
+      )}
     >
-      <Text size="1" color="textDark">
+      <Text size="1" color="text-dark">
         {children}
       </Text>
     </Flex>
