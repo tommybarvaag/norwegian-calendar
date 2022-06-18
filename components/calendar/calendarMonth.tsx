@@ -1,7 +1,7 @@
 import type { CalendarDay as CalendarDayType } from "@/types";
 import { getCalendarYear } from "@/utils/calendarUtils";
 import { getDayName, getWeek } from "@/utils/dateUtils";
-import { getDay, getMonth, getYear, startOfISOWeek } from "date-fns";
+import { getDate, getDay, getMonth, getYear, startOfISOWeek } from "date-fns";
 import * as React from "react";
 import { Box, Card, Flex, Grid, Heading, Text } from "../ui";
 import { CalendarEntry } from "./calendarDay";
@@ -37,12 +37,13 @@ const getSpacingDaysToRender = (days: CalendarDayType[]) => {
     7: 6,
   };
 
-  console.log(days?.[0]?.date?.getDay());
-
   return spacingDaysToRender[days?.[0]?.date?.getDay()] ?? 0;
 };
 
 const CalendarMonth: React.FC<{ date: Date }> = ({ date, ...other }) => {
+  const currentMonth = getMonth(new Date());
+  const currentDate = getDate(new Date());
+
   const { year, month } = React.useMemo(
     () => ({
       year: getYear(date),
@@ -79,7 +80,14 @@ const CalendarMonth: React.FC<{ date: Date }> = ({ date, ...other }) => {
       }}
       {...other}
     >
-      <Heading textAlign="center">{selectedMonth?.month}</Heading>
+      <Heading
+        textAlign="center"
+        css={{
+          color: currentMonth === month ? "$teal9" : "$text",
+        }}
+      >
+        {selectedMonth?.month}
+      </Heading>
       <Grid
         as={Card}
         gridTemplateColumns="8"
@@ -88,31 +96,31 @@ const CalendarMonth: React.FC<{ date: Date }> = ({ date, ...other }) => {
           display: "grid",
           padding: "0",
           "> div:nth-child(16n+9)": {
-            backgroundColor: "$gray4",
+            backgroundColor: currentMonth === month ? "$teal3" : "$gray4",
           },
           "> div:nth-child(16n+10)": {
-            backgroundColor: "$gray4",
+            backgroundColor: currentMonth === month ? "$teal3" : "$gray4",
           },
           "> div:nth-child(16n+11)": {
-            backgroundColor: "$gray4",
+            backgroundColor: currentMonth === month ? "$teal3" : "$gray4",
           },
           "> div:nth-child(16n+12)": {
-            backgroundColor: "$gray4",
+            backgroundColor: currentMonth === month ? "$teal3" : "$gray4",
           },
           "> div:nth-child(16n+13)": {
-            backgroundColor: "$gray4",
+            backgroundColor: currentMonth === month ? "$teal3" : "$gray4",
           },
           "> div:nth-child(16n+14)": {
-            backgroundColor: "$gray4",
+            backgroundColor: currentMonth === month ? "$teal3" : "$gray4",
           },
           "> div:nth-child(16n+15)": {
-            backgroundColor: "$gray4",
+            backgroundColor: currentMonth === month ? "$teal3" : "$gray4",
           },
           "> div:nth-child(16n+16)": {
-            backgroundColor: "$gray4",
+            backgroundColor: currentMonth === month ? "$teal3" : "$gray4",
           },
           "> div:nth-child(16n+88)": {
-            backgroundColor: "$gray4",
+            backgroundColor: currentMonth === month ? "$teal3" : "$gray4",
           },
         }}
       >
@@ -140,7 +148,13 @@ const CalendarMonth: React.FC<{ date: Date }> = ({ date, ...other }) => {
                   {getWeek(day.date, "nb")}
                 </CalendarEntry>
               ) : null}
-              <CalendarEntry key={`calendar-day-${i}`} isWorkDay={day.isWorkDay} isSunday={day.isSunday} isHoliday={day.isHoliday}>
+              <CalendarEntry
+                key={`calendar-day-${i}`}
+                isWorkDay={day.isWorkDay}
+                isSunday={day.isSunday}
+                isHoliday={day.isHoliday}
+                isToday={currentMonth === month && day.day === currentDate}
+              >
                 {day.day}
               </CalendarEntry>
             </>

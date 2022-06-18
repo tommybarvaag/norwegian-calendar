@@ -4,7 +4,7 @@ import { createStitches } from "@stitches/react";
 export type { VariantProps } from "@stitches/react";
 export type CSS = Stitches.CSS<typeof config>;
 
-import { blue, blueDark, gray, grayDark, green, greenDark, mauve, mauveDark, red, redDark } from "@radix-ui/colors";
+import { blue, blueDark, gray, grayDark, green, greenDark, mauve, mauveDark, red, redDark, teal, tealDark } from "@radix-ui/colors";
 
 export const { styled, css, theme, createTheme, getCssText, globalCss, keyframes, config } = createStitches({
   theme: {
@@ -14,6 +14,7 @@ export const { styled, css, theme, createTheme, getCssText, globalCss, keyframes
       ...redDark,
       ...greenDark,
       ...mauveDark,
+      ...tealDark,
       background: "$mauve1",
       text: "$mauve12",
       textDark: "$mauve11",
@@ -245,5 +246,6 @@ export const lightTheme = createTheme("light-theme", {
     ...red,
     ...green,
     ...mauve,
+    ...teal,
   },
 });

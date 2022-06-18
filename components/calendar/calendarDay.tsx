@@ -20,6 +20,11 @@ const CalendarEntryStyled = styled(Flex, {
         color: "$gray11",
       },
     },
+    isToday: {
+      true: {
+        color: "$teal11",
+      },
+    },
     backgroundColor: {
       gray: {
         backgroundColor: "$gray12",
