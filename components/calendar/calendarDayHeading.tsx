@@ -2,7 +2,7 @@ import { mergeCss } from "@/utils/cssUtils";
 import { CSS } from "stitches.config";
 import { Flex, Text } from "../ui";
 
-const CalendarDayHeading: React.FC<{ children: React.ReactNode; css?: CSS }> = ({ children }) => {
+const CalendarDayHeading: React.FC<{ children: React.ReactNode; css?: CSS }> = ({ children, css }) => {
   return (
     <Flex
       justifyContent="center"

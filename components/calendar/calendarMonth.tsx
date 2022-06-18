@@ -108,7 +108,7 @@ const CalendarMonth: React.FC<{ date: Date }> = ({ date, ...other }) => {
       >
         <CalendarDayHeading
           css={{
-            color: "$gray12",
+            color: "$gray11",
           }}
         >
           uke
