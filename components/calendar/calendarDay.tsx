@@ -7,7 +7,7 @@ const CalendarEntryStyled = styled(Flex, {
   variants: {
     isSunday: {
       true: {
-        color: "$green10",
+        color: "$red10",
       },
     },
     isHoliday: {
@@ -18,6 +18,11 @@ const CalendarEntryStyled = styled(Flex, {
     isWeekNumber: {
       true: {
         color: "$gray11",
+      },
+    },
+    backgroundColor: {
+      gray: {
+        backgroundColor: "$gray12",
       },
     },
   },
@@ -34,7 +39,7 @@ const CalendarEntry: React.FC<VariantProps<typeof CalendarEntryStyled> & { child
       justifyContent="center"
       css={mergeCss(
         {
-          padding: "$1",
+          padding: "$2 $1",
         },
         css
       )}

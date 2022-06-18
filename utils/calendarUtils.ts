@@ -214,7 +214,7 @@ export const getCalendarYear = (year: number, locale?: string) => {
     year,
     isLeapYear: yearIsLeapYear(year),
     months: allMonthsInYear.map<CalendarMonth>((monthDate) => {
-      const month = getFormattedMonth(monthDate);
+      const month = getFormattedMonth(monthDate, locale);
       return {
         month,
         days: getAllDaysInMonth(monthDate).map((date) => createDate(date, locale)),
