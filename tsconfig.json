@@ -18,6 +18,8 @@
     "paths": {
       "@/components/*": ["components/*"],
       "@/constants/*": ["constants/*"],
+      "@/pages/*": ["pages/*"],
+      "@/hooks/*": ["hooks/*"],
       "@/lib/*": ["lib/*"],
       "@/logic/*": ["logic/*"],
       "@/styles/*": ["styles/*"],

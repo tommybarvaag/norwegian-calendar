@@ -1,7 +1,8 @@
+import useDate from "@/hooks/useDate";
 import type { CalendarDay as CalendarDayType } from "@/types";
 import { getCalendarYear } from "@/utils/calendarUtils";
 import { getDayName, getWeek } from "@/utils/dateUtils";
-import { getDate, getDay, getMonth, getYear, startOfISOWeek } from "date-fns";
+import { getDay, getMonth, getYear, startOfISOWeek } from "date-fns";
 import * as React from "react";
 import { Box, Card, Flex, Grid, Heading, Text } from "../ui";
 import { CalendarEntry } from "./calendarDay";
@@ -41,8 +42,7 @@ const getSpacingDaysToRender = (days: CalendarDayType[]) => {
 };
 
 const CalendarMonth: React.FC<{ date: Date }> = ({ date, ...other }) => {
-  const currentMonth = getMonth(new Date());
-  const currentDate = getDate(new Date());
+  const { day: currentDate, month: currentMonth } = useDate();
 
   const { year, month } = React.useMemo(
     () => ({

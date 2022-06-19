@@ -20,7 +20,7 @@ export const getStaticProps: GetStaticProps = ({ params }) => {
   return {
     props: {
       year: +params.year,
-    }, // will be passed to the page component as props
+    },
   };
 };
 
