@@ -16,7 +16,7 @@
     "next": "12.1.6",
     "react": "18.2.0",
     "react-dom": "18.2.0",
-    "valtio": "^1.6.1"
+    "zustand": "^4.0.0-rc.1"
   },
   "devDependencies": {
     "@types/lodash.merge": "^4.6.7",

@@ -1,13 +1,19 @@
-import { proxy, useSnapshot } from "valtio";
+import createStore from "zustand";
+import create from "zustand/vanilla";
 
-const state = proxy({ date: new Date() });
+// Once every half minute, update in ms
+const UPDATE_INTERVAL = 30 * 1000;
+
+const dateStore = create<{ now: Date }>((set) => ({
+  now: new Date(),
+}));
 
 setInterval(() => {
-  state.date = new Date();
-}, 1000);
+  dateStore.setState(() => ({
+    now: new Date(),
+  }));
+}, UPDATE_INTERVAL);
 
-export default function useDate() {
-  const { date } = useSnapshot(state);
+const useDateStore = createStore(dateStore);
 
-  return { date, month: date.getMonth(), day: date.getDate(), year: date.getFullYear() };
-}
+export { useDateStore };
