@@ -44,6 +44,8 @@ const getSpacingDaysToRender = (days: CalendarDayType[]) => {
 const CalendarMonth: React.FC<{ date: Date }> = ({ date, ...other }) => {
   const { now } = useDateStore();
 
+  console.log(now);
+
   const { currentDate, currentMonth } = React.useMemo(
     () => ({
       currentDate: getDate(now),

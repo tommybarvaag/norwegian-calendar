@@ -9,8 +9,10 @@ const dateStore = create<{ now: Date }>((set) => ({
 }));
 
 setInterval(() => {
+  const meh = new Date();
+  meh.setUTCMonth(1);
   dateStore.setState(() => ({
-    now: new Date(),
+    now: meh,
   }));
 }, UPDATE_INTERVAL);
 
