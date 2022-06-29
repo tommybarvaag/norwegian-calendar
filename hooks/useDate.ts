@@ -2,7 +2,7 @@ import createStore from "zustand";
 import create from "zustand/vanilla";
 
 // Once every half minute, update in ms
-const UPDATE_INTERVAL = 30 * 1000;
+const UPDATE_INTERVAL = 1000;
 
 const dateStore = create<{ now: Date }>((set) => ({
   now: new Date(),
