@@ -1,3 +1,4 @@
+import { useDateStore } from "@/hooks/useDate";
 import { getAllMonthsInYear } from "@/utils/calendarUtils";
 import { getYear } from "date-fns";
 import * as React from "react";
@@ -5,7 +6,7 @@ import { Flex, Grid, Heading } from "../ui";
 import { CalendarMonth } from "./calendarMonth";
 
 const CalendarYear: React.FC<{ date: Date }> = ({ date }) => {
-  const id = React.useId();
+  const { now } = useDateStore();
   const months = React.useMemo(() => getAllMonthsInYear(date), [date]);
 
   return (
@@ -28,7 +29,7 @@ const CalendarYear: React.FC<{ date: Date }> = ({ date }) => {
         gap="5"
       >
         {months.map((month, index) => (
-          <CalendarMonth key={`calendar-year-calendar-month-${id}-${index}`} date={month} />
+          <CalendarMonth key={`calendar-year-calendar-month-${index}`} date={month} />
         ))}
       </Grid>
     </Flex>
