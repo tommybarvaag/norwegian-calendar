@@ -1,6 +1,5 @@
 import { useDateStore } from "@/hooks/useDate";
 import { getAllMonthsInYear } from "@/utils/calendarUtils";
-import { getFormattedDateAndTime } from "@/utils/dateUtils";
 import { getYear } from "date-fns";
 import * as React from "react";
 import { Flex, Grid, Heading } from "../ui";
@@ -33,7 +32,6 @@ const CalendarYear: React.FC<{ date: Date }> = ({ date }) => {
           <CalendarMonth key={`calendar-year-calendar-month-${index}`} date={month} />
         ))}
       </Grid>
-      <Flex>{getFormattedDateAndTime(now)}</Flex>
     </Flex>
   );
 };

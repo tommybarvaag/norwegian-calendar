@@ -43,6 +43,11 @@ const getSpacingDaysToRender = (days: CalendarDayType[]) => {
 
 const CalendarMonth: React.FC<{ date: Date }> = ({ date, ...other }) => {
   const { now } = useDateStore();
+  const [loaded, setLoaded] = React.useState(false);
+
+  React.useEffect(() => {
+    setLoaded(true);
+  }, []);
 
   const { currentDate, currentMonth } = React.useMemo(
     () => ({
@@ -104,31 +109,31 @@ const CalendarMonth: React.FC<{ date: Date }> = ({ date, ...other }) => {
           display: "grid",
           padding: "0",
           "> div:nth-child(16n+9)": {
-            backgroundColor: currentMonth === month ? "$teal3" : "$gray4",
+            backgroundColor: loaded && currentMonth === month ? "$teal3" : "$gray4",
           },
           "> div:nth-child(16n+10)": {
-            backgroundColor: currentMonth === month ? "$teal3" : "$gray4",
+            backgroundColor: loaded && currentMonth === month ? "$teal3" : "$gray4",
           },
           "> div:nth-child(16n+11)": {
-            backgroundColor: currentMonth === month ? "$teal3" : "$gray4",
+            backgroundColor: loaded && currentMonth === month ? "$teal3" : "$gray4",
           },
           "> div:nth-child(16n+12)": {
-            backgroundColor: currentMonth === month ? "$teal3" : "$gray4",
+            backgroundColor: loaded && currentMonth === month ? "$teal3" : "$gray4",
           },
           "> div:nth-child(16n+13)": {
-            backgroundColor: currentMonth === month ? "$teal3" : "$gray4",
+            backgroundColor: loaded && currentMonth === month ? "$teal3" : "$gray4",
           },
           "> div:nth-child(16n+14)": {
-            backgroundColor: currentMonth === month ? "$teal3" : "$gray4",
+            backgroundColor: loaded && currentMonth === month ? "$teal3" : "$gray4",
           },
           "> div:nth-child(16n+15)": {
-            backgroundColor: currentMonth === month ? "$teal3" : "$gray4",
+            backgroundColor: loaded && currentMonth === month ? "$teal3" : "$gray4",
           },
           "> div:nth-child(16n+16)": {
-            backgroundColor: currentMonth === month ? "$teal3" : "$gray4",
+            backgroundColor: loaded && currentMonth === month ? "$teal3" : "$gray4",
           },
           "> div:nth-child(16n+88)": {
-            backgroundColor: currentMonth === month ? "$teal3" : "$gray4",
+            backgroundColor: loaded && currentMonth === month ? "$teal3" : "$gray4",
           },
         }}
       >
@@ -161,7 +166,7 @@ const CalendarMonth: React.FC<{ date: Date }> = ({ date, ...other }) => {
                 isWorkDay={day.isWorkDay}
                 isSunday={day.isSunday}
                 isHoliday={day.isHoliday}
-                isToday={currentMonth === month && day.day === currentDate}
+                isToday={loaded && currentMonth === month && day.day === currentDate}
               >
                 {day.day}
               </CalendarEntry>
