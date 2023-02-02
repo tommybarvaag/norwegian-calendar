@@ -1,6 +1,6 @@
-import merge from "lodash.merge";
-import { CSS } from "stitches.config";
+import { ClassValue, clsx } from "clsx";
+import { twMerge } from "tailwind-merge";
 
-export const mergeCss = (...args: CSS[]): CSS => ({
-  ...merge({}, ...args),
-});
+export function cn(...inputs: ClassValue[]) {
+  return twMerge(clsx(inputs));
+}

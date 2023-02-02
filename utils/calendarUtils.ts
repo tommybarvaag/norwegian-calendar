@@ -29,11 +29,13 @@ import {
 import { enUS, nb } from "date-fns/locale";
 
 export const isWorkDay = (day: CalendarDay): boolean =>
-  (!day?.isHoliday ?? false) && day?.name?.toUpperCase() !== "SATURDAY" && day?.name?.toUpperCase() !== "SUNDAY";
+  (!day?.isHoliday ?? false) &&
+  day?.name?.toUpperCase() !== "SATURDAY" &&
+  day?.name?.toUpperCase() !== "SUNDAY";
 
 export const getLocale = (locale: string): Locale => {
   if (!isString(locale)) {
-    return enUS;
+    return nb;
   }
 
   switch (locale.toLowerCase()) {
@@ -42,9 +44,15 @@ export const getLocale = (locale: string): Locale => {
     case "nb-no":
     case "nn-no":
       return nb;
+    case "en":
+      return enUS;
+    case "en-us":
+      return enUS;
+    case "en-gb":
+      return enUS;
 
     default:
-      return enUS;
+      return nb;
   }
 };
 
@@ -86,7 +94,8 @@ const getEaster = (year: number): Date => {
 
 export const getFirstDayOfYear = (year: number): Date => new Date(year, 0, 1);
 
-export const yearIsLeapYear = (year: number): boolean => isLeapYear(getFirstDayOfYear(year));
+export const yearIsLeapYear = (year: number): boolean =>
+  isLeapYear(getFirstDayOfYear(year));
 
 export const getAllWeeksInYear = (date: Date, locale: string): Date[] => {
   const l = getLocale(locale);
@@ -150,7 +159,9 @@ const getNorwegianHolidays = memoize(function (year: number): Holiday[] {
   ];
 });
 
-const getNorwegianHolidaysDictionary = memoize(function (year: number): Record<string, Holiday> {
+const getNorwegianHolidaysDictionary = memoize(function (
+  year: number
+): Record<string, Holiday> {
   return getNorwegianHolidays(year).reduce(
     (result, norwegianHoliday) => ({
       ...result,
@@ -217,7 +228,9 @@ export const getCalendarYear = (year: number, locale?: string) => {
       const month = getFormattedMonth(monthDate, locale);
       return {
         month,
-        days: getAllDaysInMonth(monthDate).map((date) => createDate(date, locale)),
+        days: getAllDaysInMonth(monthDate).map((date) =>
+          createDate(date, locale)
+        ),
       };
     }),
   };

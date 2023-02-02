@@ -3,28 +3,43 @@ import { range } from "@/utils/commonUtils";
 import { format, getWeek as getWeekDateFns } from "date-fns";
 import { getLocale, getWeekStarsOn } from "./calendarUtils";
 
-export const getFormattedDate = (date: Date, locale?: string) => format(date, "dd-MM-yyyy", { locale: getLocale(locale) });
+export const getFormattedDate = (date: Date, locale?: string) =>
+  format(date, "dd-MM-yyyy", { locale: getLocale(locale) });
 
-export const getFormattedShortDate = (date: Date, locale?: string) => format(date, "EE d. MMM yyyy", { locale: getLocale(locale) });
+export const getFormattedShortDate = (date: Date, locale?: string) =>
+  format(date, "EE d. MMM yyyy", { locale: getLocale(locale) });
 
-export const getFormattedLongDate = (date: Date, locale?: string) => format(date, "EEEE d. MMMM yyyy", { locale: getLocale(locale) });
+export const getFormattedLongDate = (date: Date, locale?: string) =>
+  format(date, "EEEE d. MMMM yyyy", { locale: getLocale(locale) });
 
-export const getFormattedDay = (date: Date, locale?: string) => format(date, "EEEE", { locale: getLocale(locale) });
+export const getFormattedDay = (date: Date, locale?: string) =>
+  format(date, "EEEE", { locale: getLocale(locale) });
 
-export const getFormattedMonth = (date: Date, locale?: string) => format(date, "MMMM", { locale: getLocale(locale) });
+export const getFormattedMonth = (date: Date, locale?: string) =>
+  format(date, "MMMM", { locale: getLocale(locale) });
 
-export const getFormattedDayAndMonth = (date: Date, locale?: string) => format(date, "dd.MM", { locale: getLocale(locale) });
+export const getFormattedDayAndMonth = (date: Date, locale?: string) =>
+  format(date, "dd.MM", { locale: getLocale(locale) });
 
-export const getFormattedMicrosoftSqlDate = (date: Date, locale?: string) => format(date, "yyyy-MM-dd hh-mm-ss", { locale: getLocale(locale) });
+export const getFormattedMicrosoftSqlDate = (date: Date, locale?: string) =>
+  format(date, "yyyy-MM-dd hh-mm-ss", { locale: getLocale(locale) });
 
-export const getFormattedTime = (date: Date, locale?: string): string => format(date, "HH:mm:ss", { locale: getLocale(locale) });
+export const getFormattedTime = (date: Date, locale?: string): string =>
+  format(date, "HH:mm:ss", { locale: getLocale(locale) });
 
-export const getFormattedDateAndTime = (date: Date, locale?: string) => `${getFormattedDate(date, locale)} ${getFormattedTime(date, locale)}`;
+export const getFormattedDateAndTime = (date: Date, locale?: string) =>
+  `${getFormattedDate(date, locale)} ${getFormattedTime(date, locale)}`;
 
-export const getFormattedIsoDateAndTime = (date: Date, locale?: string) => format(date, "yyyy-MM-dd'T'HH:mm:ssXX", { locale: getLocale(locale) });
+export const getFormattedIsoDateAndTime = (date: Date, locale?: string) =>
+  format(date, "yyyy-MM-dd'T'HH:mm:ssXX", { locale: getLocale(locale) });
 
-export const getWeek = (date: Date, locale?: string) => getWeekDateFns(date, { locale: getLocale(locale), weekStartsOn: getWeekStarsOn(locale) });
-export const getDayName = (date: Date, locale?: string) => format(date, "EE", { locale: getLocale(locale) });
+export const getWeek = (date: Date, locale?: string) =>
+  getWeekDateFns(date, {
+    locale: getLocale(locale),
+    weekStartsOn: getWeekStarsOn(locale),
+  });
+export const getDayName = (date: Date, locale?: string) =>
+  format(date, "EE", { locale: getLocale(locale) });
 
 export const getMonthFromName = (monthName: string) => {
   switch (monthName?.toUpperCase()) {
