@@ -16,7 +16,7 @@ export default function RootLayout({
 
   return (
     <html lang="en">
-      <body className="mx-4 mt-8 mb-40 flex items-center justify-center gap-16 bg-zinc-900 text-zinc-50 md:mt-20 lg:mx-auto lg:mt-32">
+      <body className="mx-4 mt-8 mb-40 flex flex-col items-center justify-center gap-16 bg-zinc-900 text-zinc-50 md:mt-20 lg:mx-auto lg:mt-32 lg:flex-row">
         <aside className="flex self-start">
           <YearNav dateString={date.toISOString()} />
         </aside>
