@@ -8,7 +8,6 @@ export const dynamicParams = true;
 
 export async function generateMetadata() {
   const metadata: Metadata = {
-    title: "Norsk kalender med helligdager!",
     description:
       "Norsk kalender med helligdager, ferier og mer. Helt gratis, uten reklame og uten registrering.",
     openGraph: {

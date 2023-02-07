@@ -149,7 +149,7 @@ const getNorwegianHolidays = memoize(function (year: number): Holiday[] {
     createHoliday("Langfredag", goodFriday),
     createHoliday("1. påskedag", easter),
     createHoliday("2. påskedag", easterMonday),
-    createHoliday("Offentlig høytidsdag", labourDay),
+    createHoliday("Arbeidernes dag", labourDay),
     createHoliday("Grunnlovsdag", constitutionDay),
     createHoliday("Kristi Himmelfartsdag", ascensionDay),
     createHoliday("1. pinsedag", whitsun),
