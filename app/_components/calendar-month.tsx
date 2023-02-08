@@ -148,17 +148,21 @@ const CalendarMonth: React.FC<{ month: CalendarMonth; big?: boolean }> = ({
   return (
     <div className="">
       <div className="flex items-center justify-between">
-        <Link href={`/year/${month.year}/month/${month.monthNumber}`}>
-          <h3
-            className={cn({
-              "text-emerald-500":
-                currentDate.getMonth() === month.days[0].date.getMonth() &&
-                currentDate.getFullYear() === month.days[0].date.getFullYear(),
-            })}
-          >
-            {month.month}
-          </h3>
-        </Link>
+        <div>
+          <h1>Kalender {month.year}</h1>
+          <Link href={`/year/${month.year}/month/${month.monthNumber}`}>
+            <h2
+              className={cn({
+                "text-emerald-500":
+                  currentDate.getMonth() === month.days[0].date.getMonth() &&
+                  currentDate.getFullYear() ===
+                    month.days[0].date.getFullYear(),
+              })}
+            >
+              {month.month}
+            </h2>
+          </Link>
+        </div>
         <Show when={big}>
           <div className="flex items-center gap-2">
             {/* Go to previous month

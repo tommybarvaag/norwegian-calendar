@@ -1,16 +1,72 @@
+import { getRequestDateNow } from "@/lib/date";
 import { getCalendarYear } from "@/utils/calendarUtils";
 import { getYear } from "date-fns";
+import Link from "next/link";
 import * as React from "react";
 import { CalendarMonth } from "./calendar-month";
 
 const CalendarYear: React.FC<{ date: Date }> = ({ date }) => {
-  const calendarYear = getCalendarYear(date.getFullYear());
+  const dateNow = getRequestDateNow();
+  const year = date.getFullYear();
+  const calendarYear = getCalendarYear(year);
 
   return (
     <div className="max-w-4xl">
-      <h1>Kalender {getYear(date)}</h1>
-      <h2>Norsk kalender med helligdager</h2>
-      <p></p>
+      <div className="flex justify-between">
+        <div>
+          <h1>Kalender {getYear(date)}</h1>
+          <h2>Norsk kalender med helligdager</h2>
+        </div>
+        <div className="flex items-center gap-2">
+          {/* Go to previous year */}
+          <Link
+            className="inline-flex min-h-[34px] items-center rounded-md border border-transparent bg-zinc-800 px-2.5 py-1.5 text-sm font-medium text-white hover:bg-zinc-700 focus:outline-none focus:ring-2 focus:ring-zinc-600 focus:ring-offset-2"
+            href={`/year/${year - 1}`}
+          >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 24 24"
+              strokeWidth={1.5}
+              stroke="currentColor"
+              className="inline h-4 w-4"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                d="M15.75 19.5L8.25 12l7.5-7.5"
+              />
+            </svg>
+          </Link>
+          {/* Go to current year */}
+          <Link
+            className="inline-flex min-h-[34px] items-center rounded-md border border-transparent bg-zinc-800 px-2.5 py-1.5 text-sm font-medium text-white hover:bg-zinc-700 focus:outline-none focus:ring-2 focus:ring-zinc-600 focus:ring-offset-2"
+            href={`/year/${dateNow.getFullYear()}`}
+          >
+            I dag
+          </Link>
+          {/* Go to next year */}
+          <Link
+            className="inline-flex min-h-[34px] items-center rounded-md border border-transparent bg-zinc-800 px-2.5 py-1.5 text-sm font-medium text-white hover:bg-zinc-700 focus:outline-none focus:ring-2 focus:ring-zinc-600 focus:ring-offset-2"
+            href={`/year/${year + 1}`}
+          >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 24 24"
+              strokeWidth={1.5}
+              stroke="currentColor"
+              className="inline h-4 w-4"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                d="M8.25 4.5l7.5 7.5-7.5 7.5"
+              />
+            </svg>
+          </Link>
+        </div>
+      </div>
       <div className="my-8 grid grid-cols-1 gap-8 lg:grid-cols-3">
         {calendarYear.months.map((month, index) => (
           <CalendarMonth
