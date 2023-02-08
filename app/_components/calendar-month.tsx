@@ -1,34 +1,49 @@
+import { Show } from "@/components/ui";
 import { getRequestDateNow } from "@/lib/date";
 import { CalendarMonth } from "@/types";
 import { getAllDaysInMonth } from "@/utils";
 import { cn } from "@/utils/cssUtils";
-import { addMonths, getWeek } from "date-fns";
+import { getWeek } from "@/utils/dateUtils";
+import { addMonths } from "date-fns";
+import Link from "next/link";
 import * as React from "react";
 
 type CalendarEntries = {
   type: "header" | "week" | "spacing" | "day";
   value: string | number | null;
+  week?: number;
   isToday?: boolean;
   isOdd?: boolean;
   isHoliday?: boolean;
   isSunday?: boolean;
+  isStartOfWeek?: boolean;
 };
 
-const isStriped = (index: number) => {
-  // the first 8 should not be striped
-  // the next 8 should be striped
-  // the next 8 should not be striped
-  // the next 8 should be striped
+const isStriped = (index: number, showWeeks = false) => {
+  if (showWeeks) {
+    // the first 8 should not be striped
+    // the next 8 should be striped
+    // the next 8 should not be striped
+    // the next 8 should be striped
+    // etc.
+    return index % 16 >= 8;
+  }
+
+  // the first 7 should not be striped
+  // the next 7 should be striped
+  // the next 7 should not be striped
+  // the next 7 should be striped
   // etc.
-  return index % 16 >= 8;
+  return index % 14 >= 7;
 };
 
-const CalendarMonth: React.FC<{ month: CalendarMonth }> = ({
+const CalendarMonth: React.FC<{ month: CalendarMonth; big?: boolean }> = ({
   month,
+  big = false,
   ...other
 }) => {
   const currentDate = getRequestDateNow();
-  const showWeeks = true;
+  const showWeeks = true && !big;
   const lastMonth = getAllDaysInMonth(addMonths(month.days[0].date, -1));
   const holidayInfos = month.days.filter((day) => day.holidayInformation);
 
@@ -46,7 +61,7 @@ const CalendarMonth: React.FC<{ month: CalendarMonth }> = ({
           acc.push({
             type: "header",
             value,
-            isOdd: isStriped(acc.length),
+            isOdd: isStriped(acc.length, showWeeks),
           });
         });
       }
@@ -56,7 +71,7 @@ const CalendarMonth: React.FC<{ month: CalendarMonth }> = ({
         acc.push({
           type: "week",
           value: getWeek(day.date),
-          isOdd: isStriped(acc.length),
+          isOdd: isStriped(acc.length, showWeeks),
         });
       }
 
@@ -80,7 +95,9 @@ const CalendarMonth: React.FC<{ month: CalendarMonth }> = ({
             type: "spacing",
             // we use date from last month to render spacing days
             value: lastMonth[lastMonth.length - (spacingDays - i)].getDate(),
-            isOdd: isStriped(acc.length),
+            week: getWeek(day.date),
+            isOdd: isStriped(acc.length, showWeeks),
+            isStartOfWeek: acc.length % (showWeeks ? 8 : 7) === 0,
           });
         }
       }
@@ -89,13 +106,15 @@ const CalendarMonth: React.FC<{ month: CalendarMonth }> = ({
       acc.push({
         type: "day",
         value: day.date.getDate(),
+        week: getWeek(day.date),
         isToday:
           day.date.getDate() === currentDate.getDate() &&
           day.date.getMonth() === currentDate.getMonth() &&
           day.date.getFullYear() === currentDate.getFullYear(),
-        isOdd: isStriped(acc.length),
+        isOdd: isStriped(acc.length, showWeeks),
         isHoliday: day.isHoliday,
         isSunday: day.isSunday,
+        isStartOfWeek: acc.length % (showWeeks ? 8 : 7) === 0,
       });
 
       // if index is last day of month, we need to add spacing days
@@ -114,7 +133,9 @@ const CalendarMonth: React.FC<{ month: CalendarMonth }> = ({
           acc.push({
             type: "spacing",
             value: i + 1,
-            isOdd: isStriped(acc.length),
+            week: getWeek(day.date),
+            isOdd: isStriped(acc.length, showWeeks),
+            isStartOfWeek: acc.length % (showWeeks ? 8 : 7) === 0,
           });
         }
       }
@@ -126,15 +147,76 @@ const CalendarMonth: React.FC<{ month: CalendarMonth }> = ({
 
   return (
     <div className="">
-      <h3
-        className={cn({
-          "text-emerald-500":
-            currentDate.getMonth() === month.days[0].date.getMonth() &&
-            currentDate.getFullYear() === month.days[0].date.getFullYear(),
-        })}
-      >
-        {month.month}
-      </h3>
+      <div className="flex items-center justify-between">
+        <Link href={`/year/${month.year}/month/${month.monthNumber}`}>
+          <h3
+            className={cn({
+              "text-emerald-500":
+                currentDate.getMonth() === month.days[0].date.getMonth() &&
+                currentDate.getFullYear() === month.days[0].date.getFullYear(),
+            })}
+          >
+            {month.month}
+          </h3>
+        </Link>
+        <Show when={big}>
+          <div className="flex items-center gap-2">
+            {/* Go to previous month
+        if month.MonthNumber is 0, go to previous year and month 11 */}
+            <Link
+              className="inline-flex min-h-[34px] items-center rounded-md border border-transparent bg-zinc-800 px-2.5 py-1.5 text-sm font-medium text-white hover:bg-zinc-700 focus:outline-none focus:ring-2 focus:ring-zinc-600 focus:ring-offset-2"
+              href={`/year/${
+                month.monthNumber === 0 ? month.year - 1 : month.year
+              }/month/${month.monthNumber === 0 ? 11 : month.monthNumber - 1}`}
+            >
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 24 24"
+                strokeWidth={1.5}
+                stroke="currentColor"
+                className="inline h-4 w-4"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  d="M15.75 19.5L8.25 12l7.5-7.5"
+                />
+              </svg>
+            </Link>
+            {/* Go to current month */}
+            <Link
+              className="inline-flex min-h-[34px]  items-center rounded-md border border-transparent bg-zinc-800 px-2.5 py-1.5 text-sm font-medium text-white hover:bg-zinc-700 focus:outline-none focus:ring-2 focus:ring-zinc-600 focus:ring-offset-2"
+              href={`/year/${currentDate.getFullYear()}/month/${currentDate.getMonth()}`}
+            >
+              <span className="">I dag</span>
+            </Link>
+            {/* Go to next month
+                if month.MonthNumber is 11, go to next year and month 0 */}
+            <Link
+              className="inline-flex min-h-[34px]  items-center rounded-md border border-transparent bg-zinc-800 px-2.5 py-1.5 text-sm font-medium text-white hover:bg-zinc-700 focus:outline-none focus:ring-2 focus:ring-zinc-600 focus:ring-offset-2"
+              href={`/year/${
+                month.monthNumber === 11 ? month.year + 1 : month.year
+              }/month/${month.monthNumber === 11 ? 0 : month.monthNumber + 1}`}
+            >
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 24 24"
+                strokeWidth={1.5}
+                stroke="currentColor"
+                className="inline h-4 w-4"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  d="M8.25 4.5l7.5 7.5-7.5 7.5"
+                />
+              </svg>
+            </Link>
+          </div>
+        </Show>
+      </div>
       <div
         className={cn("grid", {
           "grid-cols-8": showWeeks,
@@ -144,20 +226,54 @@ const CalendarMonth: React.FC<{ month: CalendarMonth }> = ({
         {calendarEntries.map((calendarDay, index) => (
           <div
             key={index}
-            className={cn(
-              "flex min-h-[34px] items-center justify-center border border-transparent",
-              {
-                "border-emerald-500 text-emerald-500": calendarDay.isToday,
-                "text-red-500": calendarDay.isHoliday || calendarDay.isSunday,
-                "text-zinc-500":
-                  calendarDay.type === "spacing" ||
-                  calendarDay.type === "week" ||
-                  calendarDay.type === "header",
-                "bg-zinc-800": calendarDay.isOdd,
-              }
-            )}
+            className={cn("flex flex-col border border-transparent", {
+              "text-emerald-500": calendarDay.isToday,
+              "text-red-500": calendarDay.isHoliday || calendarDay.isSunday,
+              "text-zinc-500":
+                calendarDay.type === "spacing" ||
+                calendarDay.type === "week" ||
+                calendarDay.type === "header",
+              "bg-zinc-800": calendarDay.isOdd,
+              "min-h-[50px] md:min-h-[112px]":
+                big &&
+                (calendarDay.type === "day" || calendarDay.type === "spacing"),
+              "items-end justify-start py-1 px-1 md:py-2 md:px-3": big,
+              "min-h-[34px] items-center justify-center": !big,
+            })}
           >
-            {calendarDay.value}
+            <div
+              className={cn("flex", {
+                "w-full items-center justify-end pb-1.5 md:pb-2":
+                  big &&
+                  (calendarDay.type === "day" ||
+                    calendarDay.type === "spacing"),
+                "justify-between": big && calendarDay.isStartOfWeek,
+              })}
+            >
+              {big && calendarDay.isStartOfWeek ? (
+                <div className="text-xs text-zinc-600 md:text-base">
+                  {calendarDay.week}
+                </div>
+              ) : null}
+              <div>{calendarDay.value}</div>
+            </div>
+            {big &&
+              (calendarDay.type === "day" || calendarDay.type === "spacing") &&
+              holidayInfos
+                .filter(
+                  (x) =>
+                    x.day === calendarDay.value &&
+                    x.weekNumber === calendarDay.week &&
+                    !!x?.holidayInformation?.name
+                )
+                .map((x) => (
+                  <div className="w-full" key={x.date.toISOString()}>
+                    <div className="hidden rounded-md bg-indigo-900 px-2 py-1 text-xs leading-tight text-white md:block">
+                      {x.holidayInformation?.name}
+                    </div>
+                    <div className="block h-2 w-full rounded-full border border-indigo-900 bg-indigo-900 md:hidden"></div>
+                  </div>
+                ))}
           </div>
         ))}
       </div>

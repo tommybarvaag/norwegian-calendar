@@ -1,6 +1,8 @@
 import type { NextPage } from "next";
 
-export type NorwegianCalendarNextPage<P = {}> = NextPage<P> & { layoutProps: PageLayoutProps };
+export type NorwegianCalendarNextPage<P = {}> = NextPage<P> & {
+  layoutProps: PageLayoutProps;
+};
 
 export type PageLayoutProps = {
   Layout: React.ComponentType<any>;
@@ -22,6 +24,8 @@ export type CalendarYear = {
 
 export type CalendarMonth = {
   month: string;
+  monthNumber: number;
+  year: number;
   days: CalendarDay[];
   payDay?: CalendarDay;
 };

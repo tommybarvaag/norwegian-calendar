@@ -19,6 +19,7 @@ import {
   endOfYear,
   getDate,
   getDay,
+  getMonth,
   getYear,
   isLeapYear,
   startOfISOWeek,
@@ -58,7 +59,7 @@ export const getLocale = (locale: string): Locale => {
 
 export const getWeekStarsOn = (locale: string): 0 | 1 => {
   if (!isString(locale)) {
-    return 0;
+    return 1;
   }
 
   switch (locale) {
@@ -217,6 +218,19 @@ export const createDate = (date: Date, locale?: string): CalendarDay => {
   };
 };
 
+export const getCalendarMonth = (
+  date: Date,
+  locale?: string
+): CalendarMonth => {
+  const month = getFormattedMonth(date, locale);
+  return {
+    month,
+    monthNumber: getMonth(date),
+    year: getYear(date),
+    days: getAllDaysInMonth(date).map((date) => createDate(date, locale)),
+  };
+};
+
 export const getCalendarYear = (year: number, locale?: string) => {
   const date = getFirstDayOfYear(year);
   const allMonthsInYear = getAllMonthsInYear(date);
@@ -224,15 +238,7 @@ export const getCalendarYear = (year: number, locale?: string) => {
   return {
     year,
     isLeapYear: yearIsLeapYear(year),
-    months: allMonthsInYear.map<CalendarMonth>((monthDate) => {
-      const month = getFormattedMonth(monthDate, locale);
-      return {
-        month,
-        days: getAllDaysInMonth(monthDate).map((date) =>
-          createDate(date, locale)
-        ),
-      };
-    }),
+    months: allMonthsInYear.map((date) => getCalendarMonth(date, locale)),
   };
 };
 

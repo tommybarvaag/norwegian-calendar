@@ -20,7 +20,7 @@ export default function RootLayout({
         <aside className="flex self-start">
           <YearNav dateString={date.toISOString()} />
         </aside>
-        <main>{children}</main>
+        <main className="w-full max-w-4xl grow">{children}</main>
       </body>
     </html>
   );

@@ -17,5 +17,5 @@ export const omit = (obj: {}, keys: string[]) =>
     .filter((k) => !keys.includes(k))
     .reduce((res, k) => Object.assign(res, { [k]: obj[k] }), {});
 
-export const stringToTitleCase = (str: string) =>
-  str.length === 0 ? str : str.charAt(0).toUpperCase() + str.slice(1);
+export const capitalize = (str: string): string =>
+  str.length === 0 ? str : `${str.charAt(0).toUpperCase()}${str.slice(1)}`;

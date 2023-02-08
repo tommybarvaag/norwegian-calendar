@@ -1,5 +1,5 @@
 import { getRequestDateNow } from "@/lib/date";
-import { CalendarYear } from "../_components/calendar-year";
+import { redirect } from "next/navigation";
 
 export const runtime = "edge";
 export const dynamic = "force-dynamic";
@@ -15,11 +15,8 @@ export async function generateMetadata() {
   };
 }
 
-export default async function RootPage() {
-  const date = getRequestDateNow();
-  return (
-    <>
-      <CalendarYear date={date} />
-    </>
-  );
+export default async function RootYearPage() {
+  redirect("/year/" + getRequestDateNow().getFullYear());
+
+  return <div>...</div>;
 }

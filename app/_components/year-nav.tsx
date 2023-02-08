@@ -5,8 +5,11 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { FC, useMemo } from "react";
 
-const YearNav: FC<{ dateString: string }> = ({ dateString }) => {
+const YearNav: FC<{ dateString: string; year?: string; month?: string }> = ({
+  dateString,
+}) => {
   const path = usePathname();
+
   const { date, years } = useMemo(() => {
     const date = new Date(dateString);
     const year = date.getFullYear();
@@ -14,7 +17,7 @@ const YearNav: FC<{ dateString: string }> = ({ dateString }) => {
     let years = Array.from({ length: 11 }, (_, i) => year - 5 + i);
 
     const pathYear = path.startsWith("/year/")
-      ? path.split("/year/")[1]
+      ? path.split("/year/")[1]?.split("/")?.[0]
       : undefined;
 
     if (pathYear && !years.includes(+pathYear)) {
@@ -29,7 +32,7 @@ const YearNav: FC<{ dateString: string }> = ({ dateString }) => {
   }, [dateString, path]);
 
   return (
-    <nav className="flex max-w-[100vw] gap-2 overflow-x-scroll pb-3 lg:flex-col">
+    <nav className="flex max-w-[300px] gap-2 overflow-x-scroll pb-3 lg:flex-col">
       {years.map((year) => (
         <Link
           key={`year-nav-year-${year}`}
