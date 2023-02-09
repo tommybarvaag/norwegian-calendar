@@ -10,7 +10,7 @@ export const runtime = "edge";
 export const dynamic = "force-dynamic";
 export const dynamicParams = true;
 
-export async function generateMetadata({ params }: SelectedYearPageProps) {
+export function generateMetadata({ params }: SelectedYearPageProps) {
   const date = new Date(params.year ?? getRequestDateNow().getFullYear());
 
   const url = getAbsoluteUrl();
@@ -33,7 +33,10 @@ export async function generateMetadata({ params }: SelectedYearPageProps) {
       card: "summary_large_image",
     },
     openGraph: {
-      title,
+      title: {
+        default: title,
+        template: "%s | Norsk kalender med helligdager",
+      },
       description,
       url: getAbsoluteUrl(`/year/${params.year}`),
       type: "website",

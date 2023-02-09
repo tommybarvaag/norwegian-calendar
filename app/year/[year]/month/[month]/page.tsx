@@ -6,7 +6,7 @@ import { cn } from "@/utils/cssUtils";
 import { getFormattedMonth } from "@/utils/dateUtils";
 import Link from "next/link";
 
-interface SelectedYearPageProps {
+interface SelectedYearMonthPageProps {
   params: { year: string; month: string };
 }
 
@@ -14,7 +14,7 @@ export const runtime = "edge";
 export const dynamic = "force-dynamic";
 export const dynamicParams = true;
 
-export async function generateMetadata({ params }: SelectedYearPageProps) {
+export function generateMetadata({ params }: SelectedYearMonthPageProps) {
   const formattedMonth = getFormattedMonth(
     new Date(+params.year, +params.month)
   );
@@ -39,7 +39,10 @@ export async function generateMetadata({ params }: SelectedYearPageProps) {
       card: "summary_large_image",
     },
     openGraph: {
-      title,
+      title: {
+        default: title,
+        template: "%s | Norsk kalender med helligdager",
+      },
       description,
       url: getAbsoluteUrl(`/year/${params.year}/month/${params.month}`),
       type: "website",
@@ -57,7 +60,7 @@ export async function generateMetadata({ params }: SelectedYearPageProps) {
 
 export default async function SelectedYearMonthPage({
   params,
-}: SelectedYearPageProps) {
+}: SelectedYearMonthPageProps) {
   const currentDate = getRequestDateNow();
 
   const date = new Date(

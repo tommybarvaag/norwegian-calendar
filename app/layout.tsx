@@ -3,7 +3,7 @@ import { getAbsoluteUrl } from "@/utils/commonUtils";
 import "styles/global.css";
 import { YearNav } from "./_components/year-nav";
 
-export async function generateMetadata() {
+export function generateMetadata() {
   const url = getAbsoluteUrl();
   const currentDate = getRequestDateNow();
 
@@ -13,6 +13,7 @@ export async function generateMetadata() {
   ogUrl.searchParams.set("mode", "dark");
 
   return {
+    themeColor: "#18181b",
     viewport: {
       width: "device-width",
       initialScale: 1,
@@ -25,6 +26,13 @@ export async function generateMetadata() {
     robots: {
       index: true,
       follow: true,
+      googleBot: {
+        index: true,
+        follow: true,
+        "max-video-preview": -1,
+        "max-image-preview": "large",
+        "max-snippet": -1,
+      },
     },
     twitter: {
       title: "Norsk kalender med helligdager",
@@ -54,6 +62,17 @@ export async function generateMetadata() {
     },
     icons: {
       shortcut: "/favicon.ico",
+      icon: [
+        { url: "/favicon-16x16.png", sizes: "16x16", type: "image/png" },
+        { url: "/favicon-32x32.png", sizes: "32x32", type: "image/png" },
+      ],
+      apple: [{ url: "/apple-touch-icon.png", sizes: "180x180" }],
+      other: [
+        {
+          rel: "mask-icon",
+          url: "/safari-pinned-tab.svg",
+        },
+      ],
     },
     other: {
       robots: "max-snippet:-1, max-image-preview:large, max-video-preview:-1",
