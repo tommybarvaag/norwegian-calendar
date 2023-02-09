@@ -32,12 +32,22 @@ export async function generateMetadata({ params }: SelectedYearPageProps) {
   return {
     title,
     description,
+    twitter: {
+      title,
+      description,
+      images: [ogUrl],
+    },
     openGraph: {
       title,
       description,
-      images: {
-        url: ogUrl,
-      },
+      images: [
+        {
+          url: ogUrl,
+          width: 1200,
+          height: 630,
+          alt: `Kalender for ${title}`,
+        },
+      ],
     },
   };
 }

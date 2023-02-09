@@ -1,6 +1,6 @@
+import { CalendarYear } from "@/app/_components/calendar-year";
 import { getRequestDateNow } from "@/lib/date";
 import { getAbsoluteUrl } from "@/utils/commonUtils";
-import { CalendarYear } from "../../_components/calendar-year";
 
 interface SelectedYearPageProps {
   params: { year: string };
@@ -15,20 +15,33 @@ export async function generateMetadata({ params }: SelectedYearPageProps) {
 
   const url = getAbsoluteUrl();
 
+  const title = params.year;
+  const description = `Norsk kalender med helligdager, ferier og mer for ${params.year}. Helt gratis, uten reklame og uten registrering.`;
+
   let ogUrl = new URL(`${url}/api/og`);
   ogUrl.searchParams.set("year", date.getFullYear().toString());
   ogUrl.searchParams.set("month", date.getMonth().toString());
   ogUrl.searchParams.set("mode", "dark");
 
   return {
-    title: params.year,
-    description: `Norsk kalender med helligdager, ferier og mer for ${params.year}. Helt gratis, uten reklame og uten registrering.`,
+    title,
+    description,
+    twitter: {
+      title,
+      description,
+      images: [ogUrl],
+    },
     openGraph: {
-      title: params.year,
-      description: `Norsk kalender med helligdager, ferier og mer for ${params.year}. Helt gratis, uten reklame og uten registrering.`,
-      images: {
-        url: ogUrl,
-      },
+      title,
+      description,
+      images: [
+        {
+          url: ogUrl,
+          width: 1200,
+          height: 630,
+          alt: `Kalender for ${params.year}`,
+        },
+      ],
     },
   };
 }

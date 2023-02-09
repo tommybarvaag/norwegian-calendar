@@ -23,7 +23,10 @@ export async function generateMetadata() {
     },
     twitter: {
       title: "Norsk kalender med helligdager",
+      description:
+        "Norsk kalender med helligdager, ferier og mer. Helt gratis, uten reklame og uten registrering.",
       card: "summary_large_image",
+      images: [ogUrl],
     },
     openGraph: {
       title: {
@@ -35,9 +38,14 @@ export async function generateMetadata() {
       siteName: "Norsk kalender med helligdager",
       description:
         "Norsk kalender med helligdager, ferier og mer. Helt gratis, uten reklame og uten registrering.",
-      images: {
-        url: ogUrl,
-      },
+      images: [
+        {
+          url: ogUrl,
+          width: 1200,
+          height: 630,
+          alt: "Norsk kalender med helligdager, ferier og mer. Helt gratis, uten reklame og uten registrering.",
+        },
+      ],
     },
     icons: {
       shortcut: "/favicon.ico",

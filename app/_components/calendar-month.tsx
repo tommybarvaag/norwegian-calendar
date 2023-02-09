@@ -1,38 +1,8 @@
 import { getRequestDateNow } from "@/lib/date";
 import { CalendarMonth } from "@/types";
-import { getAllDaysInMonth, getCalendarMonthEntries } from "@/utils";
+import { getCalendarMonthEntries } from "@/utils";
 import { cn } from "@/utils/cssUtils";
-import { addMonths } from "date-fns";
 import * as React from "react";
-
-type CalendarEntries = {
-  type: "header" | "week" | "spacing" | "day";
-  value: string | number | null;
-  week?: number;
-  isToday?: boolean;
-  isOdd?: boolean;
-  isHoliday?: boolean;
-  isSunday?: boolean;
-  isStartOfWeek?: boolean;
-};
-
-const isStriped = (index: number, showWeeks = false) => {
-  if (showWeeks) {
-    // the first 8 should not be striped
-    // the next 8 should be striped
-    // the next 8 should not be striped
-    // the next 8 should be striped
-    // etc.
-    return index % 16 >= 8;
-  }
-
-  // the first 7 should not be striped
-  // the next 7 should be striped
-  // the next 7 should not be striped
-  // the next 7 should be striped
-  // etc.
-  return index % 14 >= 7;
-};
 
 const CalendarMonth: React.FC<{ month: CalendarMonth; big?: boolean }> = ({
   month,
@@ -41,7 +11,6 @@ const CalendarMonth: React.FC<{ month: CalendarMonth; big?: boolean }> = ({
 }) => {
   const currentDate = getRequestDateNow();
   const showWeeks = true && !big;
-  const lastMonth = getAllDaysInMonth(addMonths(month.days[0].date, -1));
   const holidayInfos = month.days.filter((day) => day.holidayInformation);
 
   const calendarEntries = getCalendarMonthEntries(
@@ -60,7 +29,7 @@ const CalendarMonth: React.FC<{ month: CalendarMonth; big?: boolean }> = ({
       >
         {calendarEntries.map((calendarDay, index) => (
           <div
-            key={index}
+            key={`calendar-day-${index}`}
             className={cn("flex flex-col border border-transparent", {
               "text-emerald-500": calendarDay.isToday,
               "text-red-500": calendarDay.isHoliday || calendarDay.isSunday,
@@ -101,8 +70,8 @@ const CalendarMonth: React.FC<{ month: CalendarMonth; big?: boolean }> = ({
                     x.weekNumber === calendarDay.week &&
                     !!x?.holidayInformation?.name
                 )
-                .map((x) => (
-                  <div className="w-full" key={x.date.toISOString()}>
+                .map((x, index) => (
+                  <div key={`holiday-info-inline-${index}`} className="w-full">
                     <div className="hidden rounded-md bg-indigo-900 px-2 py-1 text-xs leading-tight text-white md:block">
                       {x.holidayInformation?.name}
                     </div>
@@ -116,8 +85,8 @@ const CalendarMonth: React.FC<{ month: CalendarMonth; big?: boolean }> = ({
         <div className="mt-4">
           {holidayInfos.map((day, index) => (
             <div
+              key={`holiday-info-${index}`}
               className="mr-1 inline-flex text-xs leading-tight text-zinc-400"
-              key={day.date.toISOString()}
             >
               {`${day.date.getDate()}.${day.date.getMonth() + 1}: ${
                 day.holidayInformation?.name

@@ -33,9 +33,9 @@ const YearNav: FC<{ dateString: string; year?: string; month?: string }> = ({
 
   return (
     <nav className="flex max-w-[300px] gap-2 overflow-x-scroll pb-3 lg:flex-col">
-      {years.map((year) => (
+      {years.map((year, index) => (
         <Link
-          key={`year-nav-year-${year}`}
+          key={`year-nav-year-${year}-${index}`}
           href={`/year/${year}`}
           className={cn("text-zinc-500", {
             "text-zinc-50": year === date.getFullYear(),
