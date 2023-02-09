@@ -36,10 +36,12 @@ export async function generateMetadata({ params }: SelectedYearPageProps) {
       title,
       description,
       images: [ogUrl],
+      card: "summary_large_image",
     },
     openGraph: {
       title,
       description,
+      url: getAbsoluteUrl(`/year/${params.year}/month/${params.month}`),
       type: "website",
       images: [
         {
