@@ -1,11 +1,9 @@
-import { Show } from "@/components/ui";
 import { getRequestDateNow } from "@/lib/date";
 import { CalendarMonth } from "@/types";
 import { getAllDaysInMonth } from "@/utils";
 import { cn } from "@/utils/cssUtils";
 import { getWeek } from "@/utils/dateUtils";
 import { addMonths } from "date-fns";
-import Link from "next/link";
 import * as React from "react";
 
 type CalendarEntries = {
@@ -147,80 +145,6 @@ const CalendarMonth: React.FC<{ month: CalendarMonth; big?: boolean }> = ({
 
   return (
     <div className="">
-      <div className="flex items-center justify-between">
-        <div>
-          <h1>Kalender {month.year}</h1>
-          <Link href={`/year/${month.year}/month/${month.monthNumber}`}>
-            <h2
-              className={cn({
-                "text-emerald-500":
-                  currentDate.getMonth() === month.days[0].date.getMonth() &&
-                  currentDate.getFullYear() ===
-                    month.days[0].date.getFullYear(),
-              })}
-            >
-              {month.month}
-            </h2>
-          </Link>
-        </div>
-        <Show when={big}>
-          <div className="flex items-center gap-2">
-            {/* Go to previous month
-        if month.MonthNumber is 0, go to previous year and month 11 */}
-            <Link
-              className="inline-flex min-h-[34px] items-center rounded-md border border-transparent bg-zinc-800 px-2.5 py-1.5 text-sm font-medium text-white hover:bg-zinc-700 focus:outline-none focus:ring-2 focus:ring-zinc-600 focus:ring-offset-2"
-              href={`/year/${
-                month.monthNumber === 0 ? month.year - 1 : month.year
-              }/month/${month.monthNumber === 0 ? 11 : month.monthNumber - 1}`}
-            >
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                fill="none"
-                viewBox="0 0 24 24"
-                strokeWidth={1.5}
-                stroke="currentColor"
-                className="inline h-4 w-4"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  d="M15.75 19.5L8.25 12l7.5-7.5"
-                />
-              </svg>
-            </Link>
-            {/* Go to current month */}
-            <Link
-              className="inline-flex min-h-[34px]  items-center rounded-md border border-transparent bg-zinc-800 px-2.5 py-1.5 text-sm font-medium text-white hover:bg-zinc-700 focus:outline-none focus:ring-2 focus:ring-zinc-600 focus:ring-offset-2"
-              href={`/year/${currentDate.getFullYear()}/month/${currentDate.getMonth()}`}
-            >
-              <span className="">I dag</span>
-            </Link>
-            {/* Go to next month
-                if month.MonthNumber is 11, go to next year and month 0 */}
-            <Link
-              className="inline-flex min-h-[34px]  items-center rounded-md border border-transparent bg-zinc-800 px-2.5 py-1.5 text-sm font-medium text-white hover:bg-zinc-700 focus:outline-none focus:ring-2 focus:ring-zinc-600 focus:ring-offset-2"
-              href={`/year/${
-                month.monthNumber === 11 ? month.year + 1 : month.year
-              }/month/${month.monthNumber === 11 ? 0 : month.monthNumber + 1}`}
-            >
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                fill="none"
-                viewBox="0 0 24 24"
-                strokeWidth={1.5}
-                stroke="currentColor"
-                className="inline h-4 w-4"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  d="M8.25 4.5l7.5 7.5-7.5 7.5"
-                />
-              </svg>
-            </Link>
-          </div>
-        </Show>
-      </div>
       <div
         className={cn("grid", {
           "grid-cols-8": showWeeks,
