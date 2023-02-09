@@ -56,8 +56,8 @@ export default async function handler(req: NextRequest) {
           <div tw="flex relative w-full h-full items-start justify-around">
             <div tw="flex flex-col py-5">
               <div
-                tw="flex text-xl uppercase font-bold tracking-tight"
-                style={{ fontFamily: "Inter", fontWeight: "normal" }}
+                tw="flex text-2xl uppercase font-bold tracking-tight"
+                style={{ fontFamily: "Inter", fontWeight: "bolder" }}
               >
                 Kalender {values.year}
               </div>
@@ -67,7 +67,7 @@ export default async function handler(req: NextRequest) {
                   fontFamily: "Inter",
                   fontWeight: "bolder",
                   marginLeft: "-3px",
-                  fontSize: "88px",
+                  fontSize: "80px",
                 }}
               >
                 {capitalize(getFormattedMonth(currentDate))}
@@ -77,7 +77,7 @@ export default async function handler(req: NextRequest) {
                   <div tw="flex flex-col mt-4 max-w-[480px]">
                     {holidayInfos.map((day, index) => (
                       <div
-                        tw="mr-1 flex text-2xl text-zinc-300"
+                        tw="mr-1 flex text-3xl text-zinc-300"
                         key={day.date.toISOString()}
                       >
                         {`${day.date.getDate()}.${day.date.getMonth() + 1}: ${
@@ -94,7 +94,7 @@ export default async function handler(req: NextRequest) {
                 <div
                   key={`calendar-day-${index}`}
                   tw={cn(
-                    "flex h-[75px] w-[75px] items-center justify-center border border-transparent",
+                    "flex text-3xl h-[75px] w-[75px] items-center justify-center border border-transparent",
                     {
                       "text-red-500":
                         calendarDay.isHoliday || calendarDay.isSunday,
