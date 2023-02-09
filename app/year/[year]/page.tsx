@@ -34,6 +34,7 @@ export async function generateMetadata({ params }: SelectedYearPageProps) {
     openGraph: {
       title,
       description,
+      type: "website",
       images: [
         {
           url: ogUrl,

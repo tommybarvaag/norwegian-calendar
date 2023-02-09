@@ -35,6 +35,7 @@ function HeadOgImageUrlCalendar({ params, og }: HeadOgImageUrlCalendarProps) {
   return (
     <>
       <meta property="og:image" content={ogUrl.toString()} />
+      <meta property="og:image:secure_url" content={ogUrl.toString()} />
     </>
   );
 }
