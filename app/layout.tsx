@@ -13,6 +13,11 @@ export async function generateMetadata() {
   ogUrl.searchParams.set("mode", "dark");
 
   return {
+    viewport: {
+      width: "device-width",
+      initialScale: 1,
+      maximumScale: 1,
+    },
     title: {
       default: "Norsk kalender med helligdager",
       template: "%s | Norsk kalender med helligdager",
