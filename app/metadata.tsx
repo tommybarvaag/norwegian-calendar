@@ -1,3 +1,5 @@
+import { getRequestDateNow } from "@/lib/date";
+import { getAbsoluteUrl } from "@/utils/commonUtils";
 import type { Metadata } from "next";
 
 const globalMetadata: Metadata = {
@@ -12,6 +14,20 @@ const globalMetadata: Metadata = {
   twitter: {
     title: "Norsk kalender med helligdager",
     card: "summary_large_image",
+  },
+  openGraph: {
+    title: {
+      default: "Norsk kalender med helligdager",
+      template: "%s | Norsk kalender med helligdager",
+    },
+    type: "website",
+    url: getAbsoluteUrl(),
+    siteName: "Norsk kalender med helligdager",
+    description:
+      "Norsk kalender med helligdager, ferier og mer. Helt gratis, uten reklame og uten registrering.",
+    images: {
+      url: `${getAbsoluteUrl()}/api/og?year=${getRequestDateNow().getFullYear()}&month=${getRequestDateNow().getMonth()}&mode=dark`,
+    },
   },
   icons: {
     shortcut: "/favicon.ico",

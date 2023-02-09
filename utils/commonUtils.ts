@@ -19,3 +19,16 @@ export const omit = (obj: {}, keys: string[]) =>
 
 export const capitalize = (str: string): string =>
   str.length === 0 ? str : `${str.charAt(0).toUpperCase()}${str.slice(1)}`;
+
+export function getAbsoluteUrl(path?: string) {
+  const base =
+    process.env.NEXT_PUBLIC_VERCEL_URL ??
+    process.env.VERCEL_URL ??
+    process.env.NEXT_PUBLIC_APP_URL;
+
+  if (path) {
+    return `${base}${path}`;
+  }
+
+  return base;
+}

@@ -50,3 +50,14 @@ export type Holiday = {
   formattedShortDate: string;
   formattedLongDate: string;
 };
+
+type CalendarEntries = {
+  type: "header" | "week" | "spacing" | "day";
+  value: string | number | null;
+  week?: number;
+  isToday?: boolean;
+  isOdd?: boolean;
+  isHoliday?: boolean;
+  isSunday?: boolean;
+  isStartOfWeek?: boolean;
+};

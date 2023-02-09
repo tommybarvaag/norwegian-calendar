@@ -1,7 +1,7 @@
 import { CalendarMonth } from "@/app/_components/calendar-month";
 import { getRequestDateNow } from "@/lib/date";
 import { getCalendarMonth } from "@/utils";
-import { capitalize } from "@/utils/commonUtils";
+import { capitalize, getAbsoluteUrl } from "@/utils/commonUtils";
 import { cn } from "@/utils/cssUtils";
 import { getFormattedMonth } from "@/utils/dateUtils";
 import Link from "next/link";
@@ -19,9 +19,21 @@ export async function generateMetadata({ params }: SelectedYearPageProps) {
     new Date(+params.year, +params.month)
   );
 
+  const title = `${capitalize(formattedMonth)} ${params.year}`;
+  const description = `Norsk kalender med helligdager, ferier og mer for ${formattedMonth} ${params.year}. Helt gratis, uten reklame og uten registrering.`;
+
   return {
-    title: `${capitalize(formattedMonth)} ${params.year}`,
-    description: `Norsk kalender med helligdager, ferier og mer for ${formattedMonth} ${params.year}. Helt gratis, uten reklame og uten registrering.`,
+    title,
+    description,
+    openGraph: {
+      title,
+      description,
+      images: {
+        url: `${getAbsoluteUrl()}/api/og?year=${params.year}&month=${
+          params.month
+        }&mode=dark`,
+      },
+    },
   };
 }
 

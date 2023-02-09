@@ -1,8 +1,7 @@
 import { getRequestDateNow } from "@/lib/date";
 import { CalendarMonth } from "@/types";
-import { getAllDaysInMonth } from "@/utils";
+import { getAllDaysInMonth, getCalendarMonthEntries } from "@/utils";
 import { cn } from "@/utils/cssUtils";
-import { getWeek } from "@/utils/dateUtils";
 import { addMonths } from "date-fns";
 import * as React from "react";
 
@@ -45,102 +44,10 @@ const CalendarMonth: React.FC<{ month: CalendarMonth; big?: boolean }> = ({
   const lastMonth = getAllDaysInMonth(addMonths(month.days[0].date, -1));
   const holidayInfos = month.days.filter((day) => day.holidayInformation);
 
-  const calendarEntries = month.days.reduce<CalendarEntries[]>(
-    (acc, day, index) => {
-      // if index is 0, we are on the first day of the month
-      // first we need to add header days
-      // then we need to add week number
-      // then we need to add spacing days
-      if (index === 0) {
-        (showWeeks
-          ? ["uke", "man.", "tir.", "ons.", "tor.", "fre.", "lør.", "søn."]
-          : ["man.", "tir.", "ons.", "tor.", "fre.", "lør.", "søn."]
-        ).forEach((value) => {
-          acc.push({
-            type: "header",
-            value,
-            isOdd: isStriped(acc.length, showWeeks),
-          });
-        });
-      }
-
-      // render week number
-      if (showWeeks && acc.length % (showWeeks ? 8 : 7) === 0) {
-        acc.push({
-          type: "week",
-          value: getWeek(day.date),
-          isOdd: isStriped(acc.length, showWeeks),
-        });
-      }
-
-      // render spacing days for month
-      // week starts on monday
-      // so if first date is a wednesday, we need to render two days of spacing
-      if (index === 0) {
-        const spacingDays = {
-          0: 6,
-          1: 0,
-          2: 1,
-          3: 2,
-          4: 3,
-          5: 4,
-          6: 5,
-          7: 6,
-        }[day.date.getDay()];
-
-        for (let i = 0; i < spacingDays; i++) {
-          acc.push({
-            type: "spacing",
-            // we use date from last month to render spacing days
-            value: lastMonth[lastMonth.length - (spacingDays - i)].getDate(),
-            week: getWeek(day.date),
-            isOdd: isStriped(acc.length, showWeeks),
-            isStartOfWeek: acc.length % (showWeeks ? 8 : 7) === 0,
-          });
-        }
-      }
-
-      // render day
-      acc.push({
-        type: "day",
-        value: day.date.getDate(),
-        week: getWeek(day.date),
-        isToday:
-          day.date.getDate() === currentDate.getDate() &&
-          day.date.getMonth() === currentDate.getMonth() &&
-          day.date.getFullYear() === currentDate.getFullYear(),
-        isOdd: isStriped(acc.length, showWeeks),
-        isHoliday: day.isHoliday,
-        isSunday: day.isSunday,
-        isStartOfWeek: acc.length % (showWeeks ? 8 : 7) === 0,
-      });
-
-      // if index is last day of month, we need to add spacing days
-      if (index === month.days.length - 1) {
-        const spacingDays = {
-          0: 0,
-          1: 6,
-          2: 5,
-          3: 4,
-          4: 3,
-          5: 2,
-          6: 1,
-          7: 0,
-        }[day.date.getDay()];
-        for (let i = 0; i < spacingDays; i++) {
-          acc.push({
-            type: "spacing",
-            value: i + 1,
-            week: getWeek(day.date),
-            isOdd: isStriped(acc.length, showWeeks),
-            isStartOfWeek: acc.length % (showWeeks ? 8 : 7) === 0,
-          });
-        }
-      }
-
-      return acc;
-    },
-    [] as CalendarEntries[]
+  const calendarEntries = getCalendarMonthEntries(
+    month,
+    currentDate,
+    showWeeks
   );
 
   return (
