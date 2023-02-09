@@ -22,6 +22,13 @@ export async function generateMetadata({ params }: SelectedYearPageProps) {
   const title = `${capitalize(formattedMonth)} ${params.year}`;
   const description = `Norsk kalender med helligdager, ferier og mer for ${formattedMonth} ${params.year}. Helt gratis, uten reklame og uten registrering.`;
 
+  const url = getAbsoluteUrl();
+
+  let ogUrl = new URL(`${url}/api/og`);
+  ogUrl.searchParams.set("year", params.year);
+  ogUrl.searchParams.set("month", params.month);
+  ogUrl.searchParams.set("mode", "dark");
+
   return {
     title,
     description,
@@ -29,9 +36,7 @@ export async function generateMetadata({ params }: SelectedYearPageProps) {
       title,
       description,
       images: {
-        url: `${getAbsoluteUrl()}/api/og?year=${params.year}&month=${
-          params.month
-        }&mode=dark`,
+        url: ogUrl,
       },
     },
   };
