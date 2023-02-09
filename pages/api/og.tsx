@@ -47,7 +47,7 @@ export default async function handler(req: NextRequest) {
     return new ImageResponse(
       (
         <div
-          tw="flex relative flex-col p-12 pb-20 w-full h-full items-start"
+          tw="flex relative flex-col p-12 pb-16 w-full h-full items-start"
           style={{
             color: paint,
             background: mode === "dark" ? "#18181b" : "#fafafa",
@@ -67,18 +67,34 @@ export default async function handler(req: NextRequest) {
                   fontFamily: "Inter",
                   fontWeight: "bolder",
                   marginLeft: "-3px",
-                  fontSize: "100px",
+                  fontSize: "88px",
                 }}
               >
                 {capitalize(getFormattedMonth(currentDate))}
               </div>
+              <div tw="flex">
+                {holidayInfos.length ? (
+                  <div tw="flex flex-col mt-4 max-w-[480px]">
+                    {holidayInfos.map((day, index) => (
+                      <div
+                        tw="mr-1 flex text-2xl text-zinc-300"
+                        key={day.date.toISOString()}
+                      >
+                        {`${day.date.getDate()}.${day.date.getMonth() + 1}: ${
+                          day.holidayInformation?.name
+                        }`}
+                      </div>
+                    ))}
+                  </div>
+                ) : null}
+              </div>
             </div>
-            <div tw="flex h-auto w-full max-w-[480px] flex-1 flex-wrap">
+            <div tw="flex h-auto w-full max-w-[600px] flex-1 flex-wrap">
               {calendarEntries.map((calendarDay, index) => (
                 <div
                   key={`calendar-day-${index}`}
                   tw={cn(
-                    "flex h-[60px] w-[60px] items-center justify-center border border-transparent",
+                    "flex h-[75px] w-[75px] items-center justify-center border border-transparent",
                     {
                       "text-red-500":
                         calendarDay.isHoliday || calendarDay.isSunday,
@@ -93,31 +109,9 @@ export default async function handler(req: NextRequest) {
                   {calendarDay.value}
                 </div>
               ))}
-              <div tw="flex">
-                {holidayInfos.length ? (
-                  <div tw="flex mt-4 max-w-[480px] flex-wrap">
-                    {holidayInfos.map((day, index) => (
-                      <div
-                        tw="mr-1 flex text-sm text-zinc-300"
-                        key={day.date.toISOString()}
-                      >
-                        {`${day.date.getDate()}.${day.date.getMonth() + 1}: ${
-                          day.holidayInformation?.name
-                        }${holidayInfos.length === index + 1 ? "" : ","}`}
-                      </div>
-                    ))}
-                  </div>
-                ) : null}
-              </div>
             </div>
           </div>
           <div tw="flex items-center w-full justify-between">
-            <div
-              tw="flex text-xl"
-              style={{ fontFamily: "Inter", fontWeight: "normal" }}
-            >
-              kalendar.today
-            </div>
             <div
               tw="flex items-center text-xl"
               style={{ fontFamily: "Inter", fontWeight: "normal" }}
