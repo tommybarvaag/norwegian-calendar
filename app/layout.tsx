@@ -17,7 +17,6 @@ export function generateMetadata() {
     viewport: {
       width: "device-width",
       initialScale: 1,
-      maximumScale: 1,
     },
     title: {
       default: "Norsk kalender med helligdager",
