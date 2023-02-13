@@ -32,7 +32,7 @@ const YearNav: FC<{ dateString: string; year?: string; month?: string }> = ({
   }, [dateString, path]);
 
   return (
-    <nav className="flex max-w-[300px] gap-2 overflow-x-scroll pb-3 lg:flex-col">
+    <nav className="flex max-w-[300px] gap-2 overflow-x-scroll pb-3 lg:flex-col lg:overflow-x-hidden">
       {years.map((year, index) => (
         <Link
           key={`year-nav-year-${year}-${index}`}
