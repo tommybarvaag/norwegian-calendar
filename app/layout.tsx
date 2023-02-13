@@ -22,6 +22,8 @@ export function generateMetadata() {
       default: "Norsk kalender med helligdager",
       template: "%s | Norsk kalender med helligdager",
     },
+    description:
+      "Norsk kalender med helligdager, ferier og mer. Helt gratis, uten reklame og uten registrering.",
     robots: {
       index: true,
       follow: true,
