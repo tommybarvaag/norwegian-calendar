@@ -1,3 +1,5 @@
+const colors = require("tailwindcss/colors");
+
 /** @type {import('tailwindcss').Config} */
 module.exports = {
   darkMode: ["class"],
@@ -14,7 +16,18 @@ module.exports = {
         "2xl": "1360px",
       },
     },
-    extend: {},
+    extend: {
+      colors: {
+        zinc: {
+          ...colors.zinc,
+          450: "#8E8E91",
+        },
+        red: {
+          ...colors.red,
+          "zinc-contrast": "#F15B5B",
+        },
+      },
+    },
   },
   plugins: [],
 };

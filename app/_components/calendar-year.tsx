@@ -25,6 +25,7 @@ const CalendarYear: React.FC<{ date: Date }> = ({ date }) => {
             className="inline-flex min-h-[34px] items-center rounded-md border border-transparent bg-zinc-800 px-2.5 py-1.5 text-sm font-medium text-white hover:bg-zinc-700 focus:outline-none focus:ring-2 focus:ring-zinc-600 focus:ring-offset-2"
             href={`/year/${year - 1}`}
           >
+            <span className="sr-only">Forrige år</span>
             <svg
               xmlns="http://www.w3.org/2000/svg"
               fill="none"
@@ -52,6 +53,7 @@ const CalendarYear: React.FC<{ date: Date }> = ({ date }) => {
             className="inline-flex min-h-[34px] items-center rounded-md border border-transparent bg-zinc-800 px-2.5 py-1.5 text-sm font-medium text-white hover:bg-zinc-700 focus:outline-none focus:ring-2 focus:ring-zinc-600 focus:ring-offset-2"
             href={`/year/${year + 1}`}
           >
+            <span className="sr-only">Neste år</span>
             <svg
               xmlns="http://www.w3.org/2000/svg"
               fill="none"

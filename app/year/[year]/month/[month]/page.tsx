@@ -93,6 +93,7 @@ export default async function SelectedYearMonthPage({
               month.monthNumber === 0 ? month.year - 1 : month.year
             }/month/${month.monthNumber === 0 ? 11 : month.monthNumber - 1}`}
           >
+            <span className="sr-only">Forrige måned</span>
             <svg
               xmlns="http://www.w3.org/2000/svg"
               fill="none"
@@ -123,6 +124,7 @@ export default async function SelectedYearMonthPage({
               month.monthNumber === 11 ? month.year + 1 : month.year
             }/month/${month.monthNumber === 11 ? 0 : month.monthNumber + 1}`}
           >
+            <span className="sr-only">Neste måned</span>
             <svg
               xmlns="http://www.w3.org/2000/svg"
               fill="none"

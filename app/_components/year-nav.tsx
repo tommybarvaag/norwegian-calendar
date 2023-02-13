@@ -37,8 +37,9 @@ const YearNav: FC<{ dateString: string; year?: string; month?: string }> = ({
         <Link
           key={`year-nav-year-${year}-${index}`}
           href={`/year/${year}`}
-          className={cn("text-zinc-500", {
-            "text-zinc-50": year === date.getFullYear(),
+          className={cn("text-zinc-450", {
+            "text-zinc-50 underline underline-offset-4":
+              year === date.getFullYear(),
           })}
         >
           {year}

@@ -32,8 +32,9 @@ const CalendarMonth: React.FC<{ month: CalendarMonth; big?: boolean }> = ({
             key={`calendar-day-${index}`}
             className={cn("flex flex-col border border-transparent", {
               "text-emerald-500": calendarDay.isToday,
-              "text-red-500": calendarDay.isHoliday || calendarDay.isSunday,
-              "text-zinc-500":
+              "text-red-zinc-contrast":
+                calendarDay.isHoliday || calendarDay.isSunday,
+              "text-zinc-450":
                 calendarDay.type === "spacing" ||
                 calendarDay.type === "week" ||
                 calendarDay.type === "header",
