@@ -35,8 +35,8 @@ export const isWorkDay = (day: CalendarDay): boolean =>
   day?.name?.toUpperCase() !== "SATURDAY" &&
   day?.name?.toUpperCase() !== "SUNDAY";
 
-export const getLocale = (locale: string): Locale => {
-  if (!isString(locale)) {
+export const getLocale = (locale: string | undefined): Locale => {
+  if (!locale || !isString(locale)) {
     return nb;
   }
 
@@ -58,7 +58,7 @@ export const getLocale = (locale: string): Locale => {
   }
 };
 
-export const getWeekStarsOn = (locale: string): 0 | 1 => {
+export const getWeekStarsOn = (locale: string | undefined): 0 | 1 => {
   if (!isString(locale)) {
     return 1;
   }
@@ -305,16 +305,17 @@ export const getCalendarMonthEntries = (
       // week starts on monday
       // so if first date is a wednesday, we need to render two days of spacing
       if (index === 0) {
-        const spacingDays = {
-          0: 6,
-          1: 0,
-          2: 1,
-          3: 2,
-          4: 3,
-          5: 4,
-          6: 5,
-          7: 6,
-        }[day.date.getDay()];
+        const spacingDays =
+          {
+            0: 6,
+            1: 0,
+            2: 1,
+            3: 2,
+            4: 3,
+            5: 4,
+            6: 5,
+            7: 6,
+          }[day.date.getDay()] ?? 0;
 
         for (let i = 0; i < spacingDays; i++) {
           acc.push({
@@ -345,16 +346,17 @@ export const getCalendarMonthEntries = (
 
       // if index is last day of month, we need to add spacing days
       if (index === month.days.length - 1) {
-        const spacingDays = {
-          0: 0,
-          1: 6,
-          2: 5,
-          3: 4,
-          4: 3,
-          5: 2,
-          6: 1,
-          7: 0,
-        }[day.date.getDay()];
+        const spacingDays =
+          {
+            0: 0,
+            1: 6,
+            2: 5,
+            3: 4,
+            4: 3,
+            5: 2,
+            6: 1,
+            7: 0,
+          }[day.date.getDay()] ?? 0;
         for (let i = 0; i < spacingDays; i++) {
           acc.push({
             type: "spacing",

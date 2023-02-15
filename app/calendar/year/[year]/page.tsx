@@ -38,7 +38,7 @@ export function generateMetadata({ params }: SelectedYearPageProps) {
         template: "%s | Norsk kalender med helligdager",
       },
       description,
-      url: getAbsoluteUrl(`/year/${params.year}`),
+      url: getAbsoluteUrl(`/calendar/year/${params.year}`),
       type: "website",
       images: [
         {

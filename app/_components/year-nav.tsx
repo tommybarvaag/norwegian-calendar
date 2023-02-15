@@ -16,8 +16,8 @@ const YearNav: FC<{ dateString: string; year?: string; month?: string }> = ({
     // enumerate five years ago up to five years from now
     let years = Array.from({ length: 11 }, (_, i) => year - 5 + i);
 
-    const pathYear = path.startsWith("/year/")
-      ? path.split("/year/")[1]?.split("/")?.[0]
+    const pathYear = path?.startsWith("/calendar/year/")
+      ? path.split("/calendar/year/")[1]?.split("/")?.[0]
       : undefined;
 
     if (pathYear && !years.includes(+pathYear)) {
@@ -36,7 +36,7 @@ const YearNav: FC<{ dateString: string; year?: string; month?: string }> = ({
       {years.map((year, index) => (
         <Link
           key={`year-nav-year-${year}-${index}`}
-          href={`/year/${year}`}
+          href={`/calendar/year/${year}`}
           className={cn("text-zinc-450", {
             "text-zinc-50 underline underline-offset-4":
               year === date.getFullYear(),

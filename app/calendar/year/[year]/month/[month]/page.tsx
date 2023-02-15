@@ -44,7 +44,9 @@ export function generateMetadata({ params }: SelectedYearMonthPageProps) {
         template: "%s | Norsk kalender med helligdager",
       },
       description,
-      url: getAbsoluteUrl(`/year/${params.year}/month/${params.month}`),
+      url: getAbsoluteUrl(
+        `/calendar/year/${params.year}/month/${params.month}`
+      ),
       type: "website",
       images: [
         {
@@ -89,7 +91,7 @@ export default async function SelectedYearMonthPage({
   if month.MonthNumber is 0, go to previous year and month 11 */}
           <Link
             className="inline-flex min-h-[34px] items-center rounded-md border border-transparent bg-zinc-800 px-2.5 py-1.5 text-sm font-medium text-white hover:bg-zinc-700 focus:outline-none focus:ring-2 focus:ring-zinc-600 focus:ring-offset-2"
-            href={`/year/${
+            href={`/calendar/year/${
               month.monthNumber === 0 ? month.year - 1 : month.year
             }/month/${month.monthNumber === 0 ? 11 : month.monthNumber - 1}`}
           >
@@ -112,7 +114,7 @@ export default async function SelectedYearMonthPage({
           {/* Go to current month */}
           <Link
             className="inline-flex min-h-[34px]  items-center rounded-md border border-transparent bg-zinc-800 px-2.5 py-1.5 text-sm font-medium text-white hover:bg-zinc-700 focus:outline-none focus:ring-2 focus:ring-zinc-600 focus:ring-offset-2"
-            href={`/year/${currentDate.getFullYear()}/month/${currentDate.getMonth()}`}
+            href={`/calendar/year/${currentDate.getFullYear()}/month/${currentDate.getMonth()}`}
           >
             <span className="">I dag</span>
           </Link>
@@ -120,7 +122,7 @@ export default async function SelectedYearMonthPage({
           if month.MonthNumber is 11, go to next year and month 0 */}
           <Link
             className="inline-flex min-h-[34px]  items-center rounded-md border border-transparent bg-zinc-800 px-2.5 py-1.5 text-sm font-medium text-white hover:bg-zinc-700 focus:outline-none focus:ring-2 focus:ring-zinc-600 focus:ring-offset-2"
-            href={`/year/${
+            href={`/calendar/year/${
               month.monthNumber === 11 ? month.year + 1 : month.year
             }/month/${month.monthNumber === 11 ? 0 : month.monthNumber + 1}`}
           >
