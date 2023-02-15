@@ -1,9 +1,8 @@
-import { calendarOgImageSchema } from "@/lib/validations/og";
-import { getCalendarMonth, getCalendarMonthEntries } from "@/utils";
+import { todayOgImageSchema } from "@/lib/validations/og";
 import { capitalize } from "@/utils/commonUtils";
-import { cn } from "@/utils/cssUtils";
-import { getFormattedMonth } from "@/utils/dateUtils";
 import { ImageResponse } from "@vercel/og";
+import { format } from "date-fns";
+import { nb } from "date-fns/locale";
 import { NextRequest } from "next/server";
 
 export const config = {
@@ -12,11 +11,11 @@ export const config = {
 };
 
 const interRegular = fetch(
-  new URL("../../assets/fonts/Inter-Regular.ttf", import.meta.url)
+  new URL("../../../assets/fonts/Inter-Regular.ttf", import.meta.url)
 ).then((res) => res.arrayBuffer());
 
 const interBold = fetch(
-  new URL("../../assets/fonts/Inter-Bold.ttf", import.meta.url)
+  new URL("../../../assets/fonts/Inter-Bold.ttf", import.meta.url)
 ).then((res) => res.arrayBuffer());
 
 export default async function handler(req: NextRequest) {
@@ -25,24 +24,20 @@ export default async function handler(req: NextRequest) {
     const fontBold = await interBold;
 
     const url = new URL(req.url);
-    const values = calendarOgImageSchema.parse(
+    const values = todayOgImageSchema.parse(
       Object.fromEntries(url.searchParams)
-    );
-
-    const currentDate = new Date(+values.year, +values.month);
-    const calendarMonth = getCalendarMonth(currentDate);
-    const calendarEntries = getCalendarMonthEntries(
-      calendarMonth,
-      currentDate,
-      true
-    );
-
-    const holidayInfos = calendarMonth.days.filter(
-      (day) => day.holidayInformation
     );
 
     const { mode } = values;
     const paint = mode === "dark" ? "#fafafa" : "#18181b";
+
+    const date = new Date(values.date);
+    const formatDay = format(date, "EEEE", {
+      locale: nb,
+    });
+    const formatMonthDateAndYear = format(date, "MMMM d, yyyy", {
+      locale: nb,
+    });
 
     return new ImageResponse(
       (
@@ -59,7 +54,7 @@ export default async function handler(req: NextRequest) {
                 tw="flex text-2xl uppercase font-bold tracking-tight"
                 style={{ fontFamily: "Inter", fontWeight: "bolder" }}
               >
-                Kalender {values.year}
+                {formatMonthDateAndYear}
               </div>
               <div
                 tw="flex leading-[1.1] text-[80px] font-bold tracking-tighter"
@@ -70,45 +65,15 @@ export default async function handler(req: NextRequest) {
                   fontSize: "80px",
                 }}
               >
-                {capitalize(getFormattedMonth(currentDate))}
+                {capitalize(formatDay)}
               </div>
-              <div tw="flex">
-                {holidayInfos.length ? (
-                  <div tw="flex flex-col mt-4 max-w-[480px]">
-                    {holidayInfos.map((day, index) => (
-                      <div
-                        tw="mr-1 flex text-3xl text-zinc-300"
-                        key={day.date.toISOString()}
-                      >
-                        {`${day.date.getDate()}.${day.date.getMonth() + 1}: ${
-                          day.holidayInformation?.name
-                        }`}
-                      </div>
-                    ))}
-                  </div>
-                ) : null}
+              <div tw="flex flex-col">
+                <div tw="flex">{values.latitude}</div>
+                <div tw="flex">{values.longitude}</div>
               </div>
             </div>
             <div tw="flex h-auto w-full max-w-[600px] flex-1 flex-wrap">
-              {calendarEntries.map((calendarDay, index) => (
-                <div
-                  key={`calendar-day-${index}`}
-                  tw={cn(
-                    "flex h-[75px] w-[75px] items-center justify-center border border-transparent text-3xl",
-                    {
-                      "text-red-500":
-                        calendarDay.isHoliday || calendarDay.isSunday,
-                      "text-zinc-500":
-                        calendarDay.type === "spacing" ||
-                        calendarDay.type === "week" ||
-                        calendarDay.type === "header",
-                      "bg-zinc-800": calendarDay.isOdd,
-                    }
-                  )}
-                >
-                  {calendarDay.value}
-                </div>
-              ))}
+              Hey
             </div>
           </div>
           <div tw="flex items-center w-full justify-between">

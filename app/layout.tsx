@@ -6,7 +6,7 @@ export function generateMetadata() {
   const url = getAbsoluteUrl();
   const currentDate = getRequestDateNow();
 
-  let ogUrl = new URL(`${url}/api/og`);
+  let ogUrl = new URL(`${url}/api/og/calendar`);
   ogUrl.searchParams.set("year", currentDate.getFullYear().toString());
   ogUrl.searchParams.set("month", currentDate.getMonth().toString());
   ogUrl.searchParams.set("mode", "dark");

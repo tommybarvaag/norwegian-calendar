@@ -24,7 +24,7 @@ export function generateMetadata({ params }: SelectedYearMonthPageProps) {
 
   const url = getAbsoluteUrl();
 
-  let ogUrl = new URL(`${url}/api/og`);
+  let ogUrl = new URL(`${url}/api/og/calendar`);
   ogUrl.searchParams.set("year", params.year);
   ogUrl.searchParams.set("month", params.month);
   ogUrl.searchParams.set("mode", "dark");
