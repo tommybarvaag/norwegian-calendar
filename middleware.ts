@@ -11,8 +11,6 @@ export async function middleware(request: NextRequest) {
   const longitude =
     url?.searchParams?.get("longitude") ?? geo?.longitude ?? "5.322054";
 
-  console.log();
-
   // Add new request headers
   url.searchParams.set("country", country);
   url.searchParams.set("city", city);

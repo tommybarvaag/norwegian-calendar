@@ -1,5 +1,8 @@
 import { todayOgImageSchema } from "@/lib/validations/og";
+import { getSunriseData, getWeatherData } from "@/lib/weather";
+import { SunriseResponseTime, WeatherResponse } from "@/types";
 import { capitalize } from "@/utils/commonUtils";
+import { getHourAndMinutes } from "@/utils/dateUtils";
 import { ImageResponse } from "@vercel/og";
 import { format } from "date-fns";
 import { nb } from "date-fns/locale";
@@ -39,6 +42,55 @@ export default async function handler(req: NextRequest) {
       locale: nb,
     });
 
+    let weatherData: WeatherResponse | undefined;
+
+    if (values.latitude && values.longitude) {
+      weatherData = await getWeatherData(values.latitude, values.longitude);
+    }
+
+    const currentWeatherData = (weatherData?.properties?.timeseries ?? [])
+      .filter((item) => {
+        // only show times from todays date and tommorow
+        return (
+          (new Date(item.time).getDate() === new Date(values.date).getDate() &&
+            // check month
+            new Date(item.time).getMonth() ===
+              new Date(values.date).getMonth()) ||
+          (new Date(item.time).getDate() ===
+            new Date(values.date).getDate() + 1 &&
+            // check month
+            new Date(item.time).getMonth() === new Date(values.date).getMonth())
+        );
+      })
+      // take only the first 24 hours
+      .slice(0, 24)
+      .sort((a, b) => {
+        return new Date(a.time).getTime() - new Date(b.time).getTime() > 0
+          ? 1
+          : -1;
+      });
+
+    let currentSunriseData: SunriseResponseTime | undefined;
+
+    if (values.latitude && values.longitude) {
+      const sunriseData = await getSunriseData(
+        date,
+        values.latitude,
+        values.longitude
+      );
+
+      currentSunriseData = sunriseData.location.time.find((x) => {
+        const sunriseDate = new Date(x.date);
+
+        // return if current date equals sunrise date year, month and day
+        return (
+          sunriseDate.getFullYear() === date.getFullYear() &&
+          sunriseDate.getMonth() === date.getMonth() &&
+          sunriseDate.getDate() === date.getDate()
+        );
+      });
+    }
+
     return new ImageResponse(
       (
         <div
@@ -71,9 +123,101 @@ export default async function handler(req: NextRequest) {
                 <div tw="flex">{values.latitude}</div>
                 <div tw="flex">{values.longitude}</div>
               </div>
+              <div tw="flex flex-col mt-8">
+                <div tw="flex items-center mb-4">
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="96"
+                    height="96"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    strokeWidth="2"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                  >
+                    <path d="M12 2v8"></path>
+                    <path d="m4.93 10.93 1.41 1.41"></path>
+                    <path d="M2 18h2"></path>
+                    <path d="M20 18h2"></path>
+                    <path d="m19.07 10.93-1.41 1.41"></path>
+                    <path d="M22 22H2"></path>
+                    <path d="m8 6 4-4 4 4"></path>
+                    <path d="M16 18a4 4 0 0 0-8 0"></path>
+                  </svg>
+                  <span tw="text-4xl ml-4">
+                    {getHourAndMinutes(
+                      new Date(currentSunriseData?.sunrise?.time ?? new Date())
+                    )}
+                  </span>
+                </div>
+                <div tw="flex items-center">
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="96"
+                    height="96"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    strokeWidth="2"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                  >
+                    <path d="M12 10V2"></path>
+                    <path d="m4.93 10.93 1.41 1.41"></path>
+                    <path d="M2 18h2"></path>
+                    <path d="M20 18h2"></path>
+                    <path d="m19.07 10.93-1.41 1.41"></path>
+                    <path d="M22 22H2"></path>
+                    <path d="m16 6-4 4-4-4"></path>
+                    <path d="M16 18a4 4 0 0 0-8 0"></path>
+                  </svg>
+                  <span tw="text-4xl ml-4">
+                    {getHourAndMinutes(
+                      new Date(currentSunriseData?.sunset?.time ?? new Date())
+                    )}
+                  </span>
+                </div>
+              </div>
             </div>
             <div tw="flex h-auto w-full max-w-[600px] flex-1 flex-wrap">
-              Hey
+              {currentWeatherData && currentWeatherData.length > 0 ? (
+                currentWeatherData.map((item, index) => {
+                  return (
+                    <div
+                      key={`current-weather-data-${index}`}
+                      tw="flex flex-col items-center h-[100px] w-[100px]"
+                    >
+                      <div
+                        tw="flex text-3xl uppercase tracking-tight"
+                        style={{
+                          fontFamily: "Inter",
+                        }}
+                      >
+                        {format(new Date(item.time), "HH:mm", {
+                          locale: nb,
+                        })}
+                      </div>
+                      <div
+                        tw="flex leading-[1.1] text-4xl font-bold tracking-tighter"
+                        style={{
+                          fontFamily: "Inter",
+                          fontWeight: "bolder",
+                        }}
+                      >
+                        {item.data.instant.details.air_temperature}
+                        &#8451;
+                      </div>
+                    </div>
+                  );
+                })
+              ) : (
+                <div tw="flex">
+                  <div tw="flex leading-[1.1] text-4xl font-bold tracking-tighter">
+                    Ingen værdata
+                  </div>
+                </div>
+              )}
             </div>
           </div>
           <div tw="flex items-center w-full justify-between">

@@ -1,17 +1,8 @@
-import { WeatherResponse } from "@/types";
+import { getWeatherData } from "@/lib/weather";
+
 export const runtime = "edge";
 export const dynamic = "force-dynamic";
 export const dynamicParams = true;
-
-const getWeatherData = async (latitude: string, longitude: string) => {
-  const url = `https://api.met.no/weatherapi/locationforecast/2.0/compact?lat=${latitude}&lon=${longitude}`;
-
-  const response = await fetch(url);
-
-  const data = await response.json();
-
-  return data as WeatherResponse;
-};
 
 async function Weather({
   date,

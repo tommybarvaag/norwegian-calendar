@@ -1,55 +1,9 @@
-import { SunriseResponse } from "@/types";
-import {
-  getDate,
-  getHours,
-  getMinutes,
-  getMonth,
-  getSeconds,
-  getYear,
-} from "date-fns";
+import { getSunriseData } from "@/lib/weather";
+import { getHourAndMinutes } from "@/utils/dateUtils";
+
 export const runtime = "edge";
 export const dynamic = "force-dynamic";
 export const dynamicParams = true;
-
-const extractDate = (input: Date) => {
-  const month = getMonth(input) + 1;
-  const date = getDate(input);
-  const hours = getHours(input);
-  const minutes = getMinutes(input);
-  const seconds = getSeconds(input);
-
-  return {
-    year: getYear(input).toString(),
-    month: month < 10 ? `0${month}` : month.toString(),
-    day: date < 10 ? `0${date}` : date.toString(),
-    hour: hours < 10 ? `0${hours}` : hours.toString(),
-    minute: minutes < 10 ? `0${minutes}` : minutes.toString(),
-    second: seconds < 10 ? `0${seconds}` : seconds.toString(),
-  };
-};
-
-const getHourAndMinutes = (date: Date) => {
-  const extractedDate = extractDate(date);
-
-  return `${extractedDate.hour}:${extractedDate.minute}`;
-};
-
-const getSunriseData = async (
-  date: Date,
-  latitude: string,
-  longitude: string
-) => {
-  // format date as YYYY-MM-DD
-  const extractedDate = extractDate(date);
-  const formattedDate = `${extractedDate.year}-${extractedDate.month}-${extractedDate.day}`;
-  const url = `https://api.met.no/weatherapi/sunrise/2.0/.json?lat=${latitude}&lon=${longitude}&date=${formattedDate}&offset=+01:00`;
-
-  const response = await fetch(url);
-
-  const data = await response.json();
-
-  return data as SunriseResponse;
-};
 
 async function Sunrise({
   date,

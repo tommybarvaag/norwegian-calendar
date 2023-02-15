@@ -1,6 +1,15 @@
 import { MONTH_NAMES, MONTH_VALUES } from "@/constants/dateConstants";
 import { range } from "@/utils/commonUtils";
-import { format, getWeek as getWeekDateFns } from "date-fns";
+import {
+  format,
+  getDate,
+  getHours,
+  getMinutes,
+  getMonth,
+  getSeconds,
+  getWeek as getWeekDateFns,
+  getYear,
+} from "date-fns";
 import { getLocale, getWeekStarsOn } from "./calendarUtils";
 
 export const getFormattedDate = (date: Date, locale?: string) =>
@@ -79,4 +88,27 @@ export const getMonthNames = () => {
 export const getThisYearAndTwoYearsIntoTheFuture = () => {
   let year = new Date().getFullYear();
   return range(year, year + 8);
+};
+
+export const extractDate = (input: Date) => {
+  const month = getMonth(input) + 1;
+  const date = getDate(input);
+  const hours = getHours(input);
+  const minutes = getMinutes(input);
+  const seconds = getSeconds(input);
+
+  return {
+    year: getYear(input).toString(),
+    month: month < 10 ? `0${month}` : month.toString(),
+    day: date < 10 ? `0${date}` : date.toString(),
+    hour: hours < 10 ? `0${hours}` : hours.toString(),
+    minute: minutes < 10 ? `0${minutes}` : minutes.toString(),
+    second: seconds < 10 ? `0${seconds}` : seconds.toString(),
+  };
+};
+
+export const getHourAndMinutes = (date: Date) => {
+  const extractedDate = extractDate(date);
+
+  return `${extractedDate.hour}:${extractedDate.minute}`;
 };
