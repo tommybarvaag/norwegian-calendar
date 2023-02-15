@@ -94,7 +94,7 @@ export default async function handler(req: NextRequest) {
                 <div
                   key={`calendar-day-${index}`}
                   tw={cn(
-                    "flex text-3xl h-[75px] w-[75px] items-center justify-center border border-transparent",
+                    "flex h-[75px] w-[75px] items-center justify-center border border-transparent text-3xl",
                     {
                       "text-red-500":
                         calendarDay.isHoliday || calendarDay.isSunday,

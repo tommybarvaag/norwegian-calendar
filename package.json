@@ -14,7 +14,9 @@
   "dependencies": {
     "@vercel/og": "^0.1.0",
     "clsx": "^1.2.1",
+    "cobe": "^0.6.3",
     "date-fns": "^2.28.0",
+    "lucide-react": "^0.114.0",
     "next": "13.1.7-canary.15",
     "react": "18.2.0",
     "react-dom": "18.2.0",
