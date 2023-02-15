@@ -24,7 +24,7 @@ export function getAbsoluteUrl(path?: string) {
   const vercelUrl = process.env.NEXT_PUBLIC_VERCEL_URL;
 
   if (vercelUrl) {
-    return `https://${vercelUrl}${path}`;
+    return path ? `https://${vercelUrl}${path}` : `https://${vercelUrl}`;
   }
 
   const base = process.env.NEXT_PUBLIC_APP_URL;
