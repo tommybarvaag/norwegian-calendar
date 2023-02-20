@@ -18,7 +18,7 @@ export function generateMetadata({ params }: SelectedYearPageProps) {
   const title = params.year;
   const description = `Norsk kalender med helligdager, ferier og mer for ${params.year}. Helt gratis, uten reklame og uten registrering.`;
 
-  let ogUrl = new URL(`${url}/api/og`);
+  let ogUrl = new URL(`${url}/api/og/calendar`);
   ogUrl.searchParams.set("year", date.getFullYear().toString());
   ogUrl.searchParams.set("month", date.getMonth().toString());
   ogUrl.searchParams.set("mode", "dark");
@@ -38,7 +38,7 @@ export function generateMetadata({ params }: SelectedYearPageProps) {
         template: "%s | Norsk kalender med helligdager",
       },
       description,
-      url: getAbsoluteUrl(`/year/${params.year}`),
+      url: getAbsoluteUrl(`/calendar/year/${params.year}`),
       type: "website",
       images: [
         {

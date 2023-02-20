@@ -23,7 +23,7 @@ const CalendarYear: React.FC<{ date: Date }> = ({ date }) => {
           {/* Go to previous year */}
           <Link
             className="inline-flex min-h-[34px] items-center rounded-md border border-transparent bg-zinc-800 px-2.5 py-1.5 text-sm font-medium text-white hover:bg-zinc-700 focus:outline-none focus:ring-2 focus:ring-zinc-600 focus:ring-offset-2"
-            href={`/year/${year - 1}`}
+            href={`/calendar/year/${year - 1}`}
           >
             <span className="sr-only">Forrige år</span>
             <svg
@@ -44,14 +44,14 @@ const CalendarYear: React.FC<{ date: Date }> = ({ date }) => {
           {/* Go to current year */}
           <Link
             className="inline-flex min-h-[34px] items-center rounded-md border border-transparent bg-zinc-800 px-2.5 py-1.5 text-sm font-medium text-white hover:bg-zinc-700 focus:outline-none focus:ring-2 focus:ring-zinc-600 focus:ring-offset-2"
-            href={`/year/${currentDate.getFullYear()}`}
+            href={`/calendar/year/${currentDate.getFullYear()}`}
           >
             I dag
           </Link>
           {/* Go to next year */}
           <Link
             className="inline-flex min-h-[34px] items-center rounded-md border border-transparent bg-zinc-800 px-2.5 py-1.5 text-sm font-medium text-white hover:bg-zinc-700 focus:outline-none focus:ring-2 focus:ring-zinc-600 focus:ring-offset-2"
-            href={`/year/${year + 1}`}
+            href={`/calendar/year/${year + 1}`}
           >
             <span className="sr-only">Neste år</span>
             <svg
@@ -74,7 +74,9 @@ const CalendarYear: React.FC<{ date: Date }> = ({ date }) => {
       <div className="my-4 grid grid-cols-1 gap-8 lg:grid-cols-3">
         {calendarYear.months.map((month, index) => (
           <div key={`calendar-year-calendar-month-${index}`}>
-            <Link href={`/year/${month.year}/month/${month.monthNumber}`}>
+            <Link
+              href={`/calendar/year/${month.year}/month/${month.monthNumber}`}
+            >
               <h2
                 className={cn({
                   "text-emerald-500":

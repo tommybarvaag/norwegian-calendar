@@ -12,11 +12,11 @@ export const config = {
 };
 
 const interRegular = fetch(
-  new URL("../../assets/fonts/Inter-Regular.ttf", import.meta.url)
+  new URL("../../../assets/fonts/Inter-Regular.ttf", import.meta.url)
 ).then((res) => res.arrayBuffer());
 
 const interBold = fetch(
-  new URL("../../assets/fonts/Inter-Bold.ttf", import.meta.url)
+  new URL("../../../assets/fonts/Inter-Bold.ttf", import.meta.url)
 ).then((res) => res.arrayBuffer());
 
 export default async function handler(req: NextRequest) {
@@ -94,7 +94,7 @@ export default async function handler(req: NextRequest) {
                 <div
                   key={`calendar-day-${index}`}
                   tw={cn(
-                    "flex text-3xl h-[75px] w-[75px] items-center justify-center border border-transparent",
+                    "flex h-[75px] w-[75px] items-center justify-center border border-transparent text-3xl",
                     {
                       "text-red-500":
                         calendarDay.isHoliday || calendarDay.isSunday,
