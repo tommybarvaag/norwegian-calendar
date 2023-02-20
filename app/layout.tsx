@@ -1,5 +1,6 @@
-import { getRequestDateNow } from "@/lib/date";
 import { getAbsoluteUrl } from "@/utils/commonUtils";
+
+import { getRequestDateNow } from "@/lib/date";
 import "styles/global.css";
 
 export function generateMetadata() {
@@ -89,7 +90,7 @@ export default function RootLayout({
 
   return (
     <html lang="en">
-      <body className="mx-4 mt-8 mb-40 flex flex-col items-center justify-center gap-16 bg-zinc-900 text-zinc-50 md:mt-20 lg:mx-auto lg:mt-32 lg:flex-row">
+      <body className="relative mx-4 mt-8 mb-40 flex flex-col items-center justify-center gap-16 bg-zinc-900 text-zinc-50 md:mt-20 lg:mx-auto lg:mt-32 lg:flex-row">
         {children}
       </body>
     </html>

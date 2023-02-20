@@ -1,5 +1,6 @@
-import { ChevronLeft } from "lucide-react";
 import Link from "next/link";
+import { ChevronLeft } from "lucide-react";
+
 import "styles/global.css";
 
 export default function CalendarLayout({
@@ -9,7 +10,7 @@ export default function CalendarLayout({
 }) {
   return (
     <>
-      <aside className="flex self-start">
+      <aside className="flex self-start xl:absolute xl:top-0 xl:left-[200px]">
         <ul>
           <li>
             <Link className="inline-flex items-center gap-1" href="/">
