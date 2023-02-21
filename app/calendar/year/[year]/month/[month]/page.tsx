@@ -1,10 +1,12 @@
+import type { Metadata } from "next";
+import Link from "next/link";
 import { CalendarMonth } from "@/app/_components/calendar-month";
-import { getRequestDateNow } from "@/lib/date";
 import { getCalendarMonth } from "@/utils";
 import { capitalize, getAbsoluteUrl } from "@/utils/commonUtils";
 import { cn } from "@/utils/cssUtils";
 import { getFormattedMonth } from "@/utils/dateUtils";
-import Link from "next/link";
+
+import { getRequestDateNow } from "@/lib/date";
 
 interface SelectedYearMonthPageProps {
   params: { year: string; month: string };
@@ -14,7 +16,9 @@ export const runtime = "edge";
 export const dynamic = "force-dynamic";
 export const dynamicParams = true;
 
-export function generateMetadata({ params }: SelectedYearMonthPageProps) {
+export function generateMetadata({
+  params,
+}: SelectedYearMonthPageProps): Metadata {
   const formattedMonth = getFormattedMonth(
     new Date(+params.year, +params.month)
   );

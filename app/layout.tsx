@@ -1,9 +1,10 @@
+import type { Metadata } from "next";
 import { getAbsoluteUrl } from "@/utils/commonUtils";
 
 import { getRequestDateNow } from "@/lib/date";
 import "styles/global.css";
 
-export function generateMetadata() {
+export function generateMetadata(): Metadata {
   const url = getAbsoluteUrl();
   const currentDate = getRequestDateNow();
 
@@ -78,6 +79,9 @@ export function generateMetadata() {
     other: {
       robots: "max-snippet:-1, max-image-preview:large, max-video-preview:-1",
     },
+    verification: {
+      google: "YQGNPGx81fDJPS5Q59XYSzw-ZT__vFDT743G8jQ4o10",
+    },
   };
 }
 
@@ -86,8 +90,6 @@ export default function RootLayout({
 }: {
   children: React.ReactNode;
 }) {
-  const date = getRequestDateNow();
-
   return (
     <html lang="en">
       <body className="relative mx-4 mt-8 mb-40 flex flex-col items-center justify-center gap-16 bg-zinc-900 text-zinc-50 md:mt-20 lg:mx-auto lg:mt-32 lg:flex-row">

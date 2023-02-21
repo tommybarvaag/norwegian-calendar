@@ -1,7 +1,9 @@
-import { getRequestDateNow } from "@/lib/date";
+import { Suspense } from "react";
+import type { Metadata } from "next";
 import { getAbsoluteUrl } from "@/utils/commonUtils";
 import { format } from "date-fns";
-import { Suspense } from "react";
+
+import { getRequestDateNow } from "@/lib/date";
 import { Cobe } from "./cobe";
 import { ShareButton } from "./share-button";
 import { Sunrise } from "./sunrise";
@@ -22,7 +24,7 @@ export function generateMetadata({
     latitude: string;
     longitude: string;
   };
-}) {
+}): Metadata {
   const currentDate = getRequestDateNow();
 
   const title = format(currentDate, "EEEE d. MMMM");
