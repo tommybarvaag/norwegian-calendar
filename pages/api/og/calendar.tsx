@@ -1,10 +1,11 @@
-import { calendarOgImageSchema } from "@/lib/validations/og";
+import { NextRequest } from "next/server";
 import { getCalendarMonth, getCalendarMonthEntries } from "@/utils";
-import { capitalize } from "@/utils/commonUtils";
+import { capitalize } from "@/utils/common-utils";
 import { cn } from "@/utils/cssUtils";
 import { getFormattedMonth } from "@/utils/dateUtils";
 import { ImageResponse } from "@vercel/og";
-import { NextRequest } from "next/server";
+
+import { calendarOgImageSchema } from "@/lib/validations/og";
 
 export const config = {
   runtime: "edge",

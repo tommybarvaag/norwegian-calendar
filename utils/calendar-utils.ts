@@ -1,5 +1,5 @@
 import { CalendarDay, CalendarEntries, CalendarMonth, Holiday } from "@/types";
-import { isString, memoize, range } from "@/utils/commonUtils";
+import { isString, memoize, range } from "@/utils/common-utils";
 import {
   getFormattedDate,
   getFormattedDay,

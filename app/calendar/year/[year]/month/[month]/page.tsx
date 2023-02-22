@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { CalendarMonth } from "@/app/_components/calendar-month";
 import { getCalendarMonth } from "@/utils";
-import { capitalize, getAbsoluteUrl } from "@/utils/commonUtils";
+import { capitalize, getAbsoluteUrl } from "@/utils/common-utils";
 import { cn } from "@/utils/cssUtils";
 import { getFormattedMonth } from "@/utils/dateUtils";
 

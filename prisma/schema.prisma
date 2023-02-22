@@ -1,0 +1,45 @@
+datasource db {
+  provider     = "mysql"
+  url          = env("DATABASE_URL")
+  relationMode = "prisma"
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+model diddle {
+  id      String   @id @default(cuid())
+  name    String
+  created DateTime @default(now())
+  updated DateTime @default(now())
+
+  dates diddle_date[]
+}
+
+model diddle_date {
+  id      String   @id @default(cuid())
+  date    DateTime @db.Date
+  created DateTime @default(now())
+  updated DateTime @default(now())
+
+  diddle    diddle @relation(fields: [diddle_id], references: [id])
+  diddle_id String
+
+  time diddle_time[]
+
+  @@index([diddle_id])
+}
+
+model diddle_time {
+  id      String   @id @default(cuid())
+  from    DateTime @db.Time
+  to      DateTime @db.Time
+  created DateTime @default(now())
+  updated DateTime @default(now())
+
+  diddle_date    diddle_date @relation(fields: [diddle_date_id], references: [id])
+  diddle_date_id String
+
+  @@index([diddle_date_id])
+}

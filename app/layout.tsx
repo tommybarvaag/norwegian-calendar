@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { getAbsoluteUrl } from "@/utils/commonUtils";
+import { getAbsoluteUrl } from "@/utils/common-utils";
 
 import { getRequestDateNow } from "@/lib/date";
 import "styles/global.css";

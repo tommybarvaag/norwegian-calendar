@@ -1,9 +1,10 @@
-import { getRequestDateNow } from "@/lib/date";
-import { getCalendarYear } from "@/utils/calendarUtils";
+import * as React from "react";
+import Link from "next/link";
+import { getCalendarYear } from "@/utils/calendar-utils";
 import { cn } from "@/utils/cssUtils";
 import { getYear } from "date-fns";
-import Link from "next/link";
-import * as React from "react";
+
+import { getRequestDateNow } from "@/lib/date";
 import { CalendarMonth } from "./calendar-month";
 
 const CalendarYear: React.FC<{ date: Date }> = ({ date }) => {
