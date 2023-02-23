@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import { CalendarYear } from "@/app/_components/calendar-year";
-import { getAbsoluteUrl } from "@/utils/commonUtils";
+import { getAbsoluteUrl } from "@/utils/common-utils";
 
 import { getRequestDateNow } from "@/lib/date";
 

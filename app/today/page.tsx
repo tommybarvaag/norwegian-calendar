@@ -1,6 +1,6 @@
 import { Suspense } from "react";
 import type { Metadata } from "next";
-import { getAbsoluteUrl } from "@/utils/commonUtils";
+import { getAbsoluteUrl } from "@/utils/common-utils";
 import { format } from "date-fns";
 
 import { getRequestDateNow } from "@/lib/date";

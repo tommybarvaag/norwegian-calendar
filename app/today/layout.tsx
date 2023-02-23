@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { ChevronLeft } from "lucide-react";
+import { ChevronLeftIcon } from "@radix-ui/react-icons";
 
 import "styles/global.css";
 
@@ -9,18 +9,18 @@ export default function CalendarLayout({
   children: React.ReactNode;
 }) {
   return (
-    <>
-      <aside className="flex self-start xl:absolute xl:top-0 xl:left-[200px]">
+    <main className="relative mt-8 mb-12 flex w-full max-w-5xl grow flex-col items-center justify-center gap-16 md:mt-20 lg:mx-auto lg:mb-24 lg:mt-32 lg:flex-row">
+      <aside className="flex self-start xl:absolute xl:top-0 xl:left-0">
         <ul>
           <li>
             <Link className="inline-flex items-center gap-1" href="/">
-              <ChevronLeft className="h-4 w-4" />
+              <ChevronLeftIcon className="h-4 w-4" />
               <span>Hjem</span>
             </Link>
           </li>
         </ul>
       </aside>
-      <main className="w-full max-w-4xl grow">{children}</main>
-    </>
+      {children}
+    </main>
   );
 }

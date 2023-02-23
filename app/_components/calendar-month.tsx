@@ -1,7 +1,7 @@
 import { getRequestDateNow } from "@/lib/date";
 import { CalendarMonth } from "@/types";
 import { getCalendarMonthEntries } from "@/utils";
-import { cn } from "@/utils/cssUtils";
+import { cn } from "@/utils/css-utils";
 import * as React from "react";
 
 const CalendarMonth: React.FC<{ month: CalendarMonth; big?: boolean }> = ({
@@ -30,15 +30,15 @@ const CalendarMonth: React.FC<{ month: CalendarMonth; big?: boolean }> = ({
         {calendarEntries.map((calendarDay, index) => (
           <div
             key={`calendar-day-${index}`}
-            className={cn("flex flex-col border border-transparent", {
-              "text-emerald-500": calendarDay.isToday,
-              "text-red-zinc-contrast":
+            className={cn("flex flex-col border-2 border-transparent", {
+              "border-emerald-500 font-medium dark:text-emerald-500": calendarDay.isToday,
+              "text-red-700 dark:text-red-zinc-contrast":
                 calendarDay.isHoliday || calendarDay.isSunday,
-              "text-zinc-450":
+              "text-zinc-500 dark:text-zinc-450":
                 calendarDay.type === "spacing" ||
                 calendarDay.type === "week" ||
                 calendarDay.type === "header",
-              "bg-zinc-800": calendarDay.isOdd,
+              "bg-zinc-200 dark:bg-zinc-800": calendarDay.isOdd,
               "min-h-[50px] md:min-h-[112px]":
                 big &&
                 (calendarDay.type === "day" || calendarDay.type === "spacing"),
@@ -56,7 +56,7 @@ const CalendarMonth: React.FC<{ month: CalendarMonth; big?: boolean }> = ({
               })}
             >
               {big && calendarDay.isStartOfWeek ? (
-                <div className="text-xs text-zinc-600 md:text-base">
+                <div className="text-xs dark:text-zinc-600 md:text-base">
                   {calendarDay.week}
                 </div>
               ) : null}
@@ -73,10 +73,10 @@ const CalendarMonth: React.FC<{ month: CalendarMonth; big?: boolean }> = ({
                 )
                 .map((x, index) => (
                   <div key={`holiday-info-inline-${index}`} className="w-full">
-                    <div className="hidden rounded-md bg-indigo-900 px-2 py-1 text-xs leading-tight text-white md:block">
+                    <div className="hidden rounded-md bg-red-zinc-contrast px-2 py-1 text-xs leading-tight text-zinc-900 md:block">
                       {x.holidayInformation?.name}
                     </div>
-                    <div className="block h-2 w-full rounded-full border border-indigo-900 bg-indigo-900 md:hidden"></div>
+                    <div className="block h-2 w-full rounded-full border border-red-700 bg-red-700 dark:border-red-zinc-contrast dark:bg-red-zinc-contrast md:hidden"></div>
                   </div>
                 ))}
           </div>
@@ -87,7 +87,7 @@ const CalendarMonth: React.FC<{ month: CalendarMonth; big?: boolean }> = ({
           {holidayInfos.map((day, index) => (
             <div
               key={`holiday-info-${index}`}
-              className="mr-1 inline-flex text-xs leading-tight text-zinc-400"
+              className="mr-1 inline-flex text-xs leading-tight dark:text-zinc-400"
             >
               {`${day.date.getDate()}.${day.date.getMonth() + 1}: ${
                 day.holidayInformation?.name

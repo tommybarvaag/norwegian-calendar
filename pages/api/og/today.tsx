@@ -1,12 +1,13 @@
-import { todayOgImageSchema } from "@/lib/validations/og";
-import { getSunriseData, getWeatherData } from "@/lib/weather";
+import { NextRequest } from "next/server";
 import { SunriseResponseTime, WeatherResponse } from "@/types";
-import { capitalize } from "@/utils/commonUtils";
-import { getHourAndMinutes } from "@/utils/dateUtils";
+import { capitalize } from "@/utils/common-utils";
+import { getHourAndMinutes } from "@/utils/date-utils";
 import { ImageResponse } from "@vercel/og";
 import { format } from "date-fns";
 import { nb } from "date-fns/locale";
-import { NextRequest } from "next/server";
+
+import { todayOgImageSchema } from "@/lib/validations/og";
+import { getSunriseData, getWeatherData } from "@/lib/weather";
 
 export const config = {
   runtime: "edge",

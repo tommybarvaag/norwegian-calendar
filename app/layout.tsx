@@ -1,7 +1,11 @@
 import type { Metadata } from "next";
-import { getAbsoluteUrl } from "@/utils/commonUtils";
+import Link from "next/link";
+import { getAbsoluteUrl } from "@/utils/common-utils";
+import { CalendarIcon } from "@radix-ui/react-icons";
 
 import { getRequestDateNow } from "@/lib/date";
+import { ThemeProvider } from "@/components/theme-provider";
+import { ThemeSelect } from "@/components/theme-select";
 import "styles/global.css";
 
 export function generateMetadata(): Metadata {
@@ -90,10 +94,51 @@ export default function RootLayout({
 }: {
   children: React.ReactNode;
 }) {
+  const currentDate = getRequestDateNow();
   return (
-    <html lang="en">
-      <body className="relative mx-4 mt-8 mb-40 flex flex-col items-center justify-center gap-16 bg-zinc-900 text-zinc-50 md:mt-20 lg:mx-auto lg:mt-32 lg:flex-row">
-        {children}
+    <html lang="en" suppressHydrationWarning>
+      <body className="relative bg-zinc-50 text-zinc-900 dark:bg-zinc-900 dark:text-zinc-50">
+        <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
+          {children}
+          <footer className="lg:px16 px-8 pb-16">
+            <hr className="mx-auto mt-8 mb-12 max-w-4xl border-zinc-300 dark:border-zinc-700" />
+            <div className="mx-auto grid w-full max-w-4xl grid-cols-2 lg:grid-cols-3">
+              <div>
+                <Link href={getAbsoluteUrl()}>
+                  <CalendarIcon className="h-12 w-12" />
+                  <h3 className="mt-3">dato.im</h3>
+                </Link>
+              </div>
+              <div>
+                <h3 className="mb-3">Sider</h3>
+                <ul>
+                  <li>
+                    <Link href="/today">I dag</Link>
+                  </li>
+                  {[...Array(4)].map((_, i) => {
+                    const year = currentDate.getFullYear() + i;
+                    return (
+                      <li key={year}>
+                        <Link href={`/calendar/year/${year}`}>{year}</Link>
+                      </li>
+                    );
+                  })}
+                </ul>
+              </div>
+              <div className="col-span-2 mt-4 lg:col-span-1 lg:mt-0">
+                <ThemeSelect className="mx-auto lg:ml-auto lg:mr-0" />
+              </div>
+            </div>
+            <div className="mx-auto mt-12 max-w-2xl">
+              <p className="text-center text-sm text-zinc-500">
+                © {currentDate.getFullYear()} dato.im lagd av{" "}
+                <Link href="https://tommylb.com" target="_blank" rel="noopener">
+                  Tommy Lunde Barvåg
+                </Link>
+              </p>
+            </div>
+          </footer>
+        </ThemeProvider>
       </body>
     </html>
   );

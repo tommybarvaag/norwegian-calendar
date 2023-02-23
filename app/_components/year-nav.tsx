@@ -1,9 +1,9 @@
 "use client";
 
-import { cn } from "@/utils/cssUtils";
+import { FC, useMemo } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { FC, useMemo } from "react";
+import { cn } from "@/utils/css-utils";
 
 const YearNav: FC<{ dateString: string; year?: string; month?: string }> = ({
   dateString,
@@ -37,8 +37,8 @@ const YearNav: FC<{ dateString: string; year?: string; month?: string }> = ({
         <Link
           key={`year-nav-year-${year}-${index}`}
           href={`/calendar/year/${year}`}
-          className={cn("text-zinc-450", {
-            "text-zinc-50 underline underline-offset-4":
+          className={cn("dark:text-zinc-450", {
+            "underline underline-offset-4 dark:text-zinc-50":
               year === date.getFullYear(),
           })}
         >

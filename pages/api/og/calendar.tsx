@@ -1,10 +1,11 @@
-import { calendarOgImageSchema } from "@/lib/validations/og";
-import { getCalendarMonth, getCalendarMonthEntries } from "@/utils";
-import { capitalize } from "@/utils/commonUtils";
-import { cn } from "@/utils/cssUtils";
-import { getFormattedMonth } from "@/utils/dateUtils";
-import { ImageResponse } from "@vercel/og";
 import { NextRequest } from "next/server";
+import { getCalendarMonth, getCalendarMonthEntries } from "@/utils";
+import { capitalize } from "@/utils/common-utils";
+import { cn } from "@/utils/css-utils";
+import { getFormattedMonth } from "@/utils/date-utils";
+import { ImageResponse } from "@vercel/og";
+
+import { calendarOgImageSchema } from "@/lib/validations/og";
 
 export const config = {
   runtime: "edge",
@@ -77,7 +78,7 @@ export default async function handler(req: NextRequest) {
                   <div tw="flex flex-col mt-4 max-w-[480px]">
                     {holidayInfos.map((day, index) => (
                       <div
-                        tw="mr-1 flex text-3xl text-zinc-300"
+                        tw="mr-1 flex text-3xl dark:text-zinc-300"
                         key={day.date.toISOString()}
                       >
                         {`${day.date.getDate()}.${day.date.getMonth() + 1}: ${
@@ -98,11 +99,11 @@ export default async function handler(req: NextRequest) {
                     {
                       "text-red-500":
                         calendarDay.isHoliday || calendarDay.isSunday,
-                      "text-zinc-500":
+                      "dark:text-zinc-500":
                         calendarDay.type === "spacing" ||
                         calendarDay.type === "week" ||
                         calendarDay.type === "header",
-                      "bg-zinc-800": calendarDay.isOdd,
+                      "dark:bg-zinc-800": calendarDay.isOdd,
                     }
                   )}
                 >

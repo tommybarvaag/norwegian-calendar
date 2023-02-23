@@ -1,5 +1,5 @@
 import { SunriseResponse, WeatherResponse } from "@/types";
-import { extractDate } from "@/utils/dateUtils";
+import { extractDate } from "@/utils/date-utils";
 
 const getWeatherData = async (latitude: string, longitude: string) => {
   const url = `https://api.met.no/weatherapi/locationforecast/2.0/compact?lat=${latitude}&lon=${longitude}`;

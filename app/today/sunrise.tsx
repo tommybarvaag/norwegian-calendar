@@ -1,5 +1,6 @@
+import { getHourAndMinutes } from "@/utils/date-utils";
+
 import { getSunriseData } from "@/lib/weather";
-import { getHourAndMinutes } from "@/utils/dateUtils";
 
 export const runtime = "edge";
 export const dynamic = "force-dynamic";
