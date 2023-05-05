@@ -9,8 +9,6 @@ import { nb } from "date-fns/locale";
 import { todayOgImageSchema } from "@/lib/validations/og";
 import { getSunriseData, getWeatherData } from "@/lib/weather";
 
-export const runtime = "edge";
-
 const interRegular = fetch(
   new URL("../../../../assets/fonts/Inter-Regular.ttf", import.meta.url)
 ).then((res) => res.arrayBuffer());

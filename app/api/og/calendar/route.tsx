@@ -7,8 +7,6 @@ import { ImageResponse } from "@vercel/og";
 
 import { calendarOgImageSchema } from "@/lib/validations/og";
 
-export const runtime = "edge";
-
 const interRegular = fetch(
   new URL("../../../../assets/fonts/Inter-Regular.ttf", import.meta.url)
 ).then((res) => res.arrayBuffer());
