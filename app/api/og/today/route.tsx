@@ -1,7 +1,3 @@
-import fs from "fs";
-import path from "path";
-import { fileURLToPath } from "url";
-
 import { NextRequest } from "next/server";
 import { SunriseResponseTime, WeatherResponse } from "@/types";
 import { capitalize } from "@/utils/common-utils";
@@ -13,25 +9,10 @@ import { nb } from "date-fns/locale";
 import { todayOgImageSchema } from "@/lib/validations/og";
 import { getSunriseData, getWeatherData } from "@/lib/weather";
 
-const interRegular = fs.promises.readFile(
-  path.join(
-    fileURLToPath(import.meta.url),
-    "../../../../../assets/fonts/Inter-Regular.ttf"
-  )
-);
-
-const interBold = fs.promises.readFile(
-  path.join(
-    fileURLToPath(import.meta.url),
-    "../../../../../assets/fonts/Inter-Bold.ttf"
-  )
-);
+export const runtime = "edge";
 
 export async function GET(req: NextRequest) {
   try {
-    const fontRegular = await interRegular;
-    const fontBold = await interBold;
-
     const url = new URL(req.url);
     const values = todayOgImageSchema.parse(
       Object.fromEntries(url.searchParams)
@@ -108,21 +89,10 @@ export async function GET(req: NextRequest) {
         >
           <div tw="flex relative w-full h-full items-start justify-around">
             <div tw="flex flex-col py-5">
-              <div
-                tw="flex text-2xl uppercase font-bold tracking-tight"
-                style={{ fontFamily: "Inter", fontWeight: "bolder" }}
-              >
+              <div tw="flex text-2xl uppercase font-bold tracking-tight">
                 {formatMonthDateAndYear}
               </div>
-              <div
-                tw="flex leading-[1.1] text-[80px] font-bold tracking-tighter"
-                style={{
-                  fontFamily: "Inter",
-                  fontWeight: "bolder",
-                  marginLeft: "-3px",
-                  fontSize: "80px",
-                }}
-              >
+              <div tw="flex leading-[1.1] text-[80px] font-bold tracking-tighter">
                 {capitalize(formatDay)}
               </div>
               <div tw="flex flex-col">
@@ -194,23 +164,12 @@ export async function GET(req: NextRequest) {
                       key={`current-weather-data-${index}`}
                       tw="flex flex-col items-center h-[100px] w-[100px]"
                     >
-                      <div
-                        tw="flex text-3xl uppercase tracking-tight"
-                        style={{
-                          fontFamily: "Inter",
-                        }}
-                      >
+                      <div tw="flex text-3xl uppercase tracking-tight">
                         {format(new Date(item.time), "HH:mm", {
                           locale: nb,
                         })}
                       </div>
-                      <div
-                        tw="flex leading-[1.1] text-4xl font-bold tracking-tighter"
-                        style={{
-                          fontFamily: "Inter",
-                          fontWeight: "bolder",
-                        }}
-                      >
+                      <div tw="flex leading-[1.1] text-4xl font-bold tracking-tighter">
                         {item.data.instant.details.air_temperature}
                         &#8451;
                       </div>
@@ -227,10 +186,7 @@ export async function GET(req: NextRequest) {
             </div>
           </div>
           <div tw="flex items-center w-full justify-between">
-            <div
-              tw="flex items-center text-xl"
-              style={{ fontFamily: "Inter", fontWeight: "normal" }}
-            >
+            <div tw="flex items-center text-xl">
               <svg width="32" height="32" viewBox="0 0 48 48" fill="none">
                 <path
                   d="M30 44v-8a9.6 9.6 0 0 0-2-7c6 0 12-4 12-11 .16-2.5-.54-4.96-2-7 .56-2.3.56-4.7 0-7 0 0-2 0-6 3-5.28-1-10.72-1-16 0-4-3-6-3-6-3-.6 2.3-.6 4.7 0 7a10.806 10.806 0 0 0-2 7c0 7 6 11 12 11a9.43 9.43 0 0 0-1.7 3.3c-.34 1.2-.44 2.46-.3 3.7v8"
@@ -255,20 +211,6 @@ export async function GET(req: NextRequest) {
       {
         width: 1200,
         height: 630,
-        fonts: [
-          {
-            name: "Inter",
-            data: fontRegular,
-            weight: 400,
-            style: "normal",
-          },
-          {
-            name: "Inter",
-            data: fontBold,
-            weight: 700,
-            style: "normal",
-          },
-        ],
       }
     );
   } catch (error) {
