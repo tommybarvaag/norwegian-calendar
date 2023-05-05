@@ -1,3 +1,7 @@
+import fs from "fs";
+import path from "path";
+import { fileURLToPath } from "url";
+
 import { NextRequest } from "next/server";
 import { SunriseResponseTime, WeatherResponse } from "@/types";
 import { capitalize } from "@/utils/common-utils";
@@ -9,13 +13,19 @@ import { nb } from "date-fns/locale";
 import { todayOgImageSchema } from "@/lib/validations/og";
 import { getSunriseData, getWeatherData } from "@/lib/weather";
 
-const interRegular = fetch(
-  new URL("../../../../assets/fonts/Inter-Regular.ttf", import.meta.url)
-).then((res) => res.arrayBuffer());
+const interRegular = fs.promises.readFile(
+  path.join(
+    fileURLToPath(import.meta.url),
+    "../../../../../assets/fonts/Inter-Regular.ttf"
+  )
+);
 
-const interBold = fetch(
-  new URL("../../../../assets/fonts/Inter-Bold.ttf", import.meta.url)
-).then((res) => res.arrayBuffer());
+const interBold = fs.promises.readFile(
+  path.join(
+    fileURLToPath(import.meta.url),
+    "../../../../../assets/fonts/Inter-Bold.ttf"
+  )
+);
 
 export async function GET(req: NextRequest) {
   try {
