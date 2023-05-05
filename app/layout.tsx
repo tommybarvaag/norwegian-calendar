@@ -18,6 +18,7 @@ export function generateMetadata(): Metadata {
   ogUrl.searchParams.set("mode", "dark");
 
   return {
+    metadataBase: new URL(getAbsoluteUrl()),
     themeColor: "#18181b",
     viewport: {
       width: "device-width",
@@ -101,7 +102,7 @@ export default function RootLayout({
         <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
           {children}
           <footer className="lg:px16 px-8 pb-16">
-            <hr className="mx-auto mt-8 mb-12 max-w-4xl border-zinc-300 dark:border-zinc-700" />
+            <hr className="mx-auto mb-12 mt-8 max-w-4xl border-zinc-300 dark:border-zinc-700" />
             <div className="mx-auto grid w-full max-w-4xl grid-cols-2 lg:grid-cols-3">
               <div>
                 <Link href={getAbsoluteUrl()}>

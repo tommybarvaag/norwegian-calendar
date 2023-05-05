@@ -9,8 +9,8 @@ export default function CalendarLayout({
   children: React.ReactNode;
 }) {
   return (
-    <main className="relative mt-8 mb-12 flex w-full max-w-5xl grow flex-col items-center justify-center gap-16 md:mt-20 lg:mx-auto lg:mb-24 lg:mt-32 lg:flex-row">
-      <aside className="flex self-start xl:absolute xl:top-0 xl:left-0">
+    <main className="relative mb-12 mt-8 flex w-full max-w-5xl grow flex-col items-center justify-center gap-16 md:mt-20 lg:mx-auto lg:mb-24 lg:mt-32 lg:flex-row">
+      <aside className="flex self-start xl:absolute xl:left-0 xl:top-0">
         <ul>
           <li>
             <Link className="inline-flex items-center gap-1" href="/">
