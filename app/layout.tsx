@@ -2,10 +2,12 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { getAbsoluteUrl } from "@/utils/common-utils";
 import { CalendarIcon } from "@radix-ui/react-icons";
+import { Analytics as VercelAnalytics } from "@vercel/analytics/react";
 
 import { getRequestDateNow } from "@/lib/date";
 import { ThemeProvider } from "@/components/theme-provider";
 import { ThemeSelect } from "@/components/theme-select";
+
 import "styles/global.css";
 
 export function generateMetadata(): Metadata {
@@ -140,6 +142,7 @@ export default function RootLayout({
             </div>
           </footer>
         </ThemeProvider>
+        <VercelAnalytics />
       </body>
     </html>
   );
