@@ -91,7 +91,6 @@ export default async function TodayPage({
     <section className="items-center justify-center">
       <div className="flex items-center justify-center gap-3">
         <Suspense fallback={<div></div>}>
-          {/* @ts-expect-error Async Server Component */}
           <Weather
             date={currentDate}
             longitude={searchParams.longitude}
@@ -99,7 +98,6 @@ export default async function TodayPage({
           />
         </Suspense>
         <Suspense fallback={<div></div>}>
-          {/* @ts-expect-error Async Server Component */}
           <Sunrise
             date={currentDate}
             longitude={searchParams.longitude}

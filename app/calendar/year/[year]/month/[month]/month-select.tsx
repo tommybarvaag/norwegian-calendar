@@ -34,9 +34,7 @@ const MonthSelect = forwardRef<
       defaultValue={month.toString()}
       onValueChange={(value) => {
         // update url
-        router.push(`/calendar/year/${year}/month/${value}`, {
-          forceOptimisticNavigation: true,
-        });
+        router.push(`/calendar/year/${year}/month/${value}`);
 
         // start transition
         startTransition(() => {
