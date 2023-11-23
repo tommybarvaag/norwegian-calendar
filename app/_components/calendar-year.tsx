@@ -5,22 +5,22 @@ import { cn } from "@/utils/css-utils";
 import { ChevronLeftIcon, ChevronRightIcon } from "@radix-ui/react-icons";
 import { getYear } from "date-fns";
 
-import { getRequestDateNow } from "@/lib/date";
 import { CalendarMonth } from "./calendar-month";
 
-const CalendarYear: React.FC<{ date: Date }> = ({ date }) => {
-  const currentDate = getRequestDateNow();
-  const year = date.getFullYear();
+const CalendarYear: React.FC<{ date?: Date }> = ({ date }) => {
+  const calendarDate = !!date ? new Date(date) : new Date();
+  const currentDate = new Date();
+  const year = calendarDate.getFullYear();
   const calendarYear = getCalendarYear(year);
 
   return (
     <div className="max-w-4xl">
       <h1 className="mb-4">
         Norsk kalender med helligdager
-        <span className="sr-only"> - Kalender {getYear(date)}</span>
+        <span className="sr-only"> - Kalender {getYear(calendarDate)}</span>
       </h1>
       <div className="flex items-center justify-between">
-        <h2>Kalender {getYear(date)}</h2>
+        <h2>Kalender {getYear(calendarDate)}</h2>
         <div className="flex items-center gap-2">
           {/* Go to previous year */}
           <Link

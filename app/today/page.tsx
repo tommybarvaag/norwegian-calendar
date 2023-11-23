@@ -3,15 +3,10 @@ import type { Metadata } from "next";
 import { getAbsoluteUrl } from "@/utils/common-utils";
 import { format } from "date-fns";
 
-import { getRequestDateNow } from "@/lib/date";
 import { Cobe } from "./cobe";
 import { ShareButton } from "./share-button";
 import { Sunrise } from "./sunrise";
 import { Weather } from "./weather";
-
-export const runtime = "edge";
-export const dynamic = "force-dynamic";
-export const dynamicParams = true;
 
 export function generateMetadata({
   searchParams,
@@ -25,7 +20,7 @@ export function generateMetadata({
     longitude: string;
   };
 }): Metadata {
-  const currentDate = getRequestDateNow();
+  const currentDate = new Date();
 
   const title = format(currentDate, "EEEE d. MMMM");
   const description = `I dag er dagen`;
@@ -79,7 +74,7 @@ export default async function TodayPage({
     longitude: string;
   };
 }) {
-  const currentDate = getRequestDateNow();
+  const currentDate = new Date();
 
   const url = getAbsoluteUrl();
 

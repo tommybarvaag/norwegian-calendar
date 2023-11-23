@@ -21,12 +21,6 @@ export const capitalize = (str: string): string =>
   str.length === 0 ? str : `${str.charAt(0).toUpperCase()}${str.slice(1)}`;
 
 export function getAbsoluteUrl(path?: string) {
-  // const vercelUrl = process.env.NEXT_PUBLIC_VERCEL_URL;
-
-  // if (vercelUrl) {
-  //   return path ? `https://${vercelUrl}${path}` : `https://${vercelUrl}`;
-  // }
-
   const base = process.env.NEXT_PUBLIC_APP_URL ?? "https://dato.im";
 
   if (path) {

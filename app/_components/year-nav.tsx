@@ -5,13 +5,13 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { cn } from "@/utils/css-utils";
 
-const YearNav: FC<{ dateString: string; year?: string; month?: string }> = ({
+const YearNav: FC<{ dateString?: string; year?: string; month?: string }> = ({
   dateString,
 }) => {
   const path = usePathname();
 
   const { date, years } = useMemo(() => {
-    const date = new Date(dateString);
+    const date = !!dateString ? new Date(dateString) : new Date();
     const year = date.getFullYear();
     // enumerate five years ago up to five years from now
     let years = Array.from({ length: 11 }, (_, i) => year - 5 + i);

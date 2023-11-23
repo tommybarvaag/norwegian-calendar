@@ -2,18 +2,12 @@ import type { Metadata } from "next";
 import { CalendarYear } from "@/app/_components/calendar-year";
 import { getAbsoluteUrl } from "@/utils/common-utils";
 
-import { getRequestDateNow } from "@/lib/date";
-
 interface SelectedYearPageProps {
   params: { year: string };
 }
 
-export const runtime = "edge";
-export const dynamic = "force-dynamic";
-export const dynamicParams = true;
-
 export function generateMetadata({ params }: SelectedYearPageProps): Metadata {
-  const date = new Date(params.year ?? getRequestDateNow().getFullYear());
+  const date = new Date(params.year ?? new Date().getFullYear());
 
   const url = getAbsoluteUrl();
 
@@ -57,7 +51,7 @@ export function generateMetadata({ params }: SelectedYearPageProps): Metadata {
 export default async function SelectedYearPage({
   params,
 }: SelectedYearPageProps) {
-  const date = new Date(params.year ?? getRequestDateNow().getFullYear());
+  const date = new Date(params.year ?? new Date().getFullYear());
 
   return (
     <>

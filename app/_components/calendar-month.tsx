@@ -1,4 +1,3 @@
-import { getRequestDateNow } from "@/lib/date";
 import { CalendarMonth } from "@/types";
 import { getCalendarMonthEntries } from "@/utils";
 import { cn } from "@/utils/css-utils";
@@ -9,7 +8,7 @@ const CalendarMonth: React.FC<{ month: CalendarMonth; big?: boolean }> = ({
   big = false,
   ...other
 }) => {
-  const currentDate = getRequestDateNow();
+  const currentDate = new Date();
   const showWeeks = true && !big;
   const holidayInfos = month.days.filter((day) => day.holidayInformation);
 
