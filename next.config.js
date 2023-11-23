@@ -50,7 +50,7 @@ const securityHeaders = [
 const nextConfig = {
   reactStrictMode: true,
   experimental: {
-    serverActions: true,
+    ppr: true,
   },
   headers() {
     return [

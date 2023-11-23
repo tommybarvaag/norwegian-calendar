@@ -6,16 +6,11 @@ import { capitalize, getAbsoluteUrl } from "@/utils/common-utils";
 import { getFormattedMonth } from "@/utils/date-utils";
 import { ChevronLeftIcon, ChevronRightIcon } from "@radix-ui/react-icons";
 
-import { getRequestDateNow } from "@/lib/date";
 import { MonthSelect } from "./month-select";
 
 interface SelectedYearMonthPageProps {
   params: { year: string; month: string };
 }
-
-export const runtime = "edge";
-export const dynamic = "force-dynamic";
-export const dynamicParams = true;
 
 export function generateMetadata({
   params,
@@ -68,7 +63,7 @@ export function generateMetadata({
 export default async function SelectedYearMonthPage({
   params,
 }: SelectedYearMonthPageProps) {
-  const currentDate = getRequestDateNow();
+  const currentDate = new Date();
 
   const date = new Date(
     +(params.year ?? currentDate.getFullYear()),

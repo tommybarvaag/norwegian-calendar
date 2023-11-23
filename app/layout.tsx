@@ -1,18 +1,25 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import Link from "next/link";
 import { getAbsoluteUrl } from "@/utils/common-utils";
 import { CalendarIcon } from "@radix-ui/react-icons";
 import { Analytics as VercelAnalytics } from "@vercel/analytics/react";
 
-import { getRequestDateNow } from "@/lib/date";
 import { ThemeProvider } from "@/components/theme-provider";
 import { ThemeSelect } from "@/components/theme-select";
 
 import "styles/global.css";
 
+import { AutoRevalidate } from "./_components/auto-revalidate";
+
+export const viewport: Viewport = {
+  themeColor: "#18181b",
+  width: "device-width",
+  initialScale: 1,
+};
+
 export function generateMetadata(): Metadata {
   const url = getAbsoluteUrl();
-  const currentDate = getRequestDateNow();
+  const currentDate = new Date();
 
   let ogUrl = new URL(`${url}/api/og/calendar`);
   ogUrl.searchParams.set("year", currentDate.getFullYear().toString());
@@ -21,11 +28,7 @@ export function generateMetadata(): Metadata {
 
   return {
     metadataBase: new URL(getAbsoluteUrl()),
-    themeColor: "#18181b",
-    viewport: {
-      width: "device-width",
-      initialScale: 1,
-    },
+
     title: {
       default: "Norsk kalender med helligdager",
       template: "%s | Norsk kalender med helligdager",
@@ -92,12 +95,13 @@ export function generateMetadata(): Metadata {
   };
 }
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
-  const currentDate = getRequestDateNow();
+  const currentDate = new Date();
+
   return (
     <html lang="en" suppressHydrationWarning>
       <body className="relative bg-zinc-50 text-zinc-900 dark:bg-zinc-900 dark:text-zinc-50">
@@ -143,6 +147,7 @@ export default function RootLayout({
           </footer>
         </ThemeProvider>
         <VercelAnalytics />
+        <AutoRevalidate />
       </body>
     </html>
   );
